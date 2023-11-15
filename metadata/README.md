@@ -7,7 +7,7 @@ CDM-Cloud 에서 Context의 정보를 가져오는 기능을 제공한다.
 Metadata 라이브러리를 사용하기 위해서는 다음 패키지를 Import 한다.
 
 ```go
-import "10.1.1.220/cdm/cdm-cloud/common/metadata"
+import "github.com/datacommand2/cdm-cloud/common/metadata"
 ```
 
 ### 제공 함수
