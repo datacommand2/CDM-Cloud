@@ -1,0 +1,22 @@
+# github.com/google/uuid v1.1.1
+## explicit
+github.com/google/uuid
+# github.com/jinzhu/copier v0.4.0
+## explicit
+github.com/jinzhu/copier
+# github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
+## explicit
+github.com/lestrrat-go/file-rotatelogs
+github.com/lestrrat-go/file-rotatelogs/internal/option
+# github.com/lestrrat-go/strftime v1.0.6
+## explicit
+github.com/lestrrat-go/strftime
+github.com/lestrrat-go/strftime/internal/errors
+# github.com/micro/go-micro/v2 v2.9.1
+## explicit
+github.com/micro/go-micro/v2/debug/log
+github.com/micro/go-micro/v2/logger
+github.com/micro/go-micro/v2/metadata
+github.com/micro/go-micro/v2/util/ring
+# github.com/pkg/errors v0.9.1
+github.com/pkg/errors
