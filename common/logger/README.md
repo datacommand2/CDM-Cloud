@@ -14,7 +14,7 @@ CDM-Cloud 의 공통 로깅 라이브러리로써 레벨에 맞는 로그를 표
 ## Usage
 Logger 라이브러리를 사용하기 위해 다음 패키지를 import 한다.
 ```go
-import "github.com/datacommand2/cdm-cloud/common//logger"
+import "github.com/datacommand2/cdm-cloud/common/logger"
 ```
 
 Logger 를 초기화한 뒤 사용할 수 있으며, 초기화 하지 않을 경우 기본적으로
