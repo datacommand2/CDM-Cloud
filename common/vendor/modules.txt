@@ -165,6 +165,7 @@ github.com/lib/pq
 github.com/lib/pq/oid
 github.com/lib/pq/scram
 # github.com/micro/cli/v2 v2.1.2
+## explicit
 github.com/micro/cli/v2
 # github.com/micro/go-micro/v2 v2.9.0
 ## explicit
