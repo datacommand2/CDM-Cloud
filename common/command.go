@@ -18,8 +18,6 @@ import (
 	"io"
 	"os"
 	"time"
-
-	_ "github.com/go-micro/plugins/v2/registry/kubernetes"
 )
 
 type command struct {
