@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cdm-cloud-rabbitmq-cookie
+type: Opaque
+data:
+  cookie: Y2RtLWNsb3VkLXJhYmJpdG1xLWNvb2tpZQ==
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdm-cloud-rabbitmq
+  labels:
+    app: cdm-cloud-rabbitmq
+spec:
+  clusterIP: None
+  selector:
+    dns: cdm-cloud-rabbitmq
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cdm-cloud-rabbitmq
+spec:
+  serviceName: cdm-cloud-rabbitmq
+  selector:
+    matchLabels:
+      app: cdm-cloud-rabbitmq
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: cdm-cloud-rabbitmq
+        dns: cdm-cloud-rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: # Enter the Docker image created from the included Dockerfile
+        env:
+          - name: CDM_SERVICE_ADVERTISE_PORT
+            value: "5672"
+
+          - name: CDM_SERVICE_NAME
+            value: cdm-cloud-rabbitmq
+
+          - name: RABBITMQ_USE_LONGNAME
+            value: "true"
+
+          - name: RABBITMQ_DEFAULT_USER
+            value: "cdm"
+
+          - name: RABBITMQ_DEFAULT_PASS
+            value: "passwd"
+            
+          - name: ORCHESTRATION_TOOL
+            value: kubernetes
+          
+          - name: KUBE_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+
+          - name: DIR
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+
+          - name: RABBITMQ_MNESIA_BASE
+            value: "/data/$(DIR)/mnesia"
+
+        volumeMounts:
+          - name: cookie
+            mountPath: "/var/lib/rabbitmq/.erlang.cookie"
+            subPath: ".erlang.cookie"
+
+      nodeName: kub1
+      volumes:
+        - name: cookie
+          secret:
+            defaultMode: 0400
+            secretName: cdm-cloud-rabbitmq-cookie
+            items:
+              - key: cookie
+                path: .erlang.cookie
+            

@@ -1,0 +1,65 @@
+version: "3.8"
+services:
+  rabbitcluster-1:
+    image: # Enter the Docker image created from the included Dockerfile
+    environment:
+      - CDM_SERVICE_NAME=cdm-cloud-rabbitmq
+      - CDM_SERVICE_ADVERTISE_PORT=5672
+      - RABBITMQ_NODENAME=rabbit@tasks.rabbitcluster-1
+      - RABBITMQ_DEFAULT_USER=cdm
+      - RABBITMQ_DEFAULT_PASS=passwd
+      - RABBITMQ_USE_LONGNAME=true
+      - RABBITMQ_ROLE=LEADER
+      - RABBITMQ_MNESIA_BASE=/data/mnesia
+    secrets:
+      - source: cdm-cloud-rabbitmq-elang
+        target: /var/lib/rabbitmq/.erlang.cookie
+        mode: 0400
+    volumes:
+      - /root/backings/data/rabbitmq/data-1:/data
+      - /root/backings/rabbitmq:/home/test
+
+  rabbitcluster-2:
+    image: # Enter the Docker image created from the included Dockerfile
+    environment:
+      - CDM_SERVICE_NAME=cdm-cloud-rabbitmq
+      - CDM_SERVICE_ADVERTISE_PORT=5672
+      - RABBITMQ_NODENAME=rabbit@tasks.rabbitcluster-2
+      - RABBITMQ_USE_LONGNAME=true
+      - RABBITMQ_ROLE=FOLLOWER
+      - RABBITMQ_LEADER_NODENAME=rabbit@tasks.rabbitcluster-1
+      - RABBITMQ_MNESIA_BASE=/data/mnesia
+    secrets:
+      - source: cdm-cloud-rabbitmq-elang
+        target: /var/lib/rabbitmq/.erlang.cookie
+        mode: 0400
+    volumes:
+      - /root/backings/data/rabbitmq/data-2:/data
+      - /root/backings/rabbitmq:/home/test
+      
+  rabbitcluster-3:
+    image: # Enter the Docker image created from the included Dockerfile
+    environment:
+      - CDM_SERVICE_NAME=cdm-cloud-rabbitmq
+      - CDM_SERVICE_ADVERTISE_PORT=5672
+      - RABBITMQ_NODENAME=rabbit@tasks.rabbitcluster-3
+      - RABBITMQ_USE_LONGNAME=true
+      - RABBITMQ_ROLE=FOLLOWER
+      - RABBITMQ_LEADER_NODENAME=rabbit@tasks.rabbitcluster-1
+      - RABBITMQ_MNESIA_BASE=/data/mnesia
+    secrets:
+      - source: cdm-cloud-rabbitmq-elang
+        target: /var/lib/rabbitmq/.erlang.cookie
+        mode: 0400
+    volumes:
+      - /root/backings/data/rabbitmq/data-3:/data
+      - /root/backings/rabbitmq:/home/test
+
+secrets:
+  cdm-cloud-rabbitmq-elang:
+    external: true
+
+networks:
+  default:
+    driver: weaveworks/net-plugin:2.6.5
+    attachable: true
