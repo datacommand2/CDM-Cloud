@@ -35,13 +35,13 @@ import (
 // causer (from github.com/pkg/errors), a ${key}Causes field is added with an
 // array of objects containing the errors this error was comprised of.
 //
-//	{
-//	  "error": err.Error(),
-//	  "errorVerbose": fmt.Sprintf("%+v", err),
-//	  "errorCauses": [
-//	    ...
-//	  ],
-//	}
+//  {
+//    "error": err.Error(),
+//    "errorVerbose": fmt.Sprintf("%+v", err),
+//    "errorCauses": [
+//      ...
+//    ],
+//  }
 func encodeError(key string, err error, enc ObjectEncoder) error {
 	basic := err.Error()
 	enc.AddString(key, basic)

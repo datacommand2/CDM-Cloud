@@ -111,11 +111,12 @@ type Stream interface {
 //
 // Example:
 //
-//	type Greeter struct {}
+//      type Greeter struct {}
 //
-//	func (g *Greeter) Hello(context, request, response) error {
-//	        return nil
-//	}
+//      func (g *Greeter) Hello(context, request, response) error {
+//              return nil
+//      }
+//
 type Handler interface {
 	Name() string
 	Handler() interface{}
@@ -184,6 +185,7 @@ func NewSubscriber(topic string, h interface{}, opts ...SubscriberOption) Subscr
 //	func (f *Foo) Bar(ctx, req, rsp) error {
 //		return nil
 //	}
+//
 func NewHandler(h interface{}, opts ...HandlerOption) Handler {
 	return DefaultServer.NewHandler(h, opts...)
 }

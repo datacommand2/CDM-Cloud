@@ -384,13 +384,13 @@ func (s *Scanner) Flush() error {
 }
 
 // scannerReader has the following characteristics:
-//   - Provides an io.SeekReader impl for bufio.Reader, when the underlying
-//     reader supports it.
-//   - Keeps track of the current read position, for when the underlying reader
-//     isn't an io.SeekReader, but we still want to know the current offset.
-//   - Writes to the hash writer what it reads, with the aid of a smaller buffer.
-//     The buffer helps avoid a performance penality for performing small writes
-//     to the crc32 hash writer.
+// - Provides an io.SeekReader impl for bufio.Reader, when the underlying
+//   reader supports it.
+// - Keeps track of the current read position, for when the underlying reader
+//   isn't an io.SeekReader, but we still want to know the current offset.
+// - Writes to the hash writer what it reads, with the aid of a smaller buffer.
+//   The buffer helps avoid a performance penality for performing small writes
+//   to the crc32 hash writer.
 type scannerReader struct {
 	reader io.Reader
 	crc    io.Writer

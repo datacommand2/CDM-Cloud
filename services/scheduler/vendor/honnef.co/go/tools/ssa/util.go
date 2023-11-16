@@ -23,6 +23,7 @@ func unparen(e ast.Expr) ast.Expr { return astutil.Unparen(e) }
 
 // isBlankIdent returns true iff e is an Ident with name "_".
 // They have no associated types.Object, and thus no type.
+//
 func isBlankIdent(e ast.Expr) bool {
 	id, ok := e.(*ast.Ident)
 	return ok && id.Name == "_"
@@ -58,6 +59,7 @@ func recvType(obj *types.Func) types.Type {
 // Exported to ssa/interp.
 //
 // TODO(adonovan): use go/types.DefaultType after 1.8.
+//
 func DefaultType(typ types.Type) types.Type {
 	if t, ok := typ.(*types.Basic); ok {
 		k := t.Kind()
@@ -84,6 +86,7 @@ func DefaultType(typ types.Type) types.Type {
 // returns a closure that prints the corresponding "end" message.
 // Call using 'defer logStack(...)()' to show builder stack on panic.
 // Don't forget trailing parens!
+//
 func logStack(format string, args ...interface{}) func() {
 	msg := fmt.Sprintf(format, args...)
 	io.WriteString(os.Stderr, msg)

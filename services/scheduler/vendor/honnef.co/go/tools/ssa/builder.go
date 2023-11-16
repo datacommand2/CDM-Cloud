@@ -74,6 +74,7 @@ type builder struct{}
 // to t or f depending on its value, performing various simplifications.
 //
 // Postcondition: fn.currentBlock is nil.
+//
 func (b *builder) cond(fn *Function, e ast.Expr, t, f *BasicBlock) {
 	switch e := e.(type) {
 	case *ast.ParenExpr:
@@ -116,6 +117,7 @@ func (b *builder) cond(fn *Function, e ast.Expr, t, f *BasicBlock) {
 // logicalBinop emits code to fn to evaluate e, a &&- or
 // ||-expression whose reified boolean value is wanted.
 // The value is returned.
+//
 func (b *builder) logicalBinop(fn *Function, e *ast.BinaryExpr) Value {
 	rhs := fn.newBasicBlock("binop.rhs")
 	done := fn.newBasicBlock("binop.done")
@@ -176,6 +178,7 @@ func (b *builder) logicalBinop(fn *Function, e *ast.BinaryExpr) Value {
 // assignment or return statement, and "value,ok" uses of
 // TypeAssertExpr, IndexExpr (when X is a map), and UnaryExpr (when Op
 // is token.ARROW).
+//
 func (b *builder) exprN(fn *Function, e ast.Expr) Value {
 	typ := fn.Pkg.typeOf(e).(*types.Tuple)
 	switch e := e.(type) {
@@ -225,6 +228,7 @@ func (b *builder) exprN(fn *Function, e ast.Expr) Value {
 // The result is nil if no special handling was required; in this case
 // the caller should treat this like an ordinary library function
 // call.
+//
 func (b *builder) builtin(fn *Function, obj *types.Builtin, args []ast.Expr, typ types.Type, pos token.Pos) Value {
 	switch obj.Name() {
 	case "make":
@@ -315,10 +319,10 @@ func (b *builder) builtin(fn *Function, obj *types.Builtin, args []ast.Expr, typ
 // addressable expression e as being a potentially escaping pointer
 // value.  For example, in this code:
 //
-//	a := A{
-//	  b: [1]B{B{c: 1}}
-//	}
-//	return &a.b[0].c
+//   a := A{
+//     b: [1]B{B{c: 1}}
+//   }
+//   return &a.b[0].c
 //
 // the application of & causes a.b[0].c to have its address taken,
 // which means that ultimately the local variable a must be
@@ -329,6 +333,7 @@ func (b *builder) builtin(fn *Function, obj *types.Builtin, args []ast.Expr, typ
 // - &x, including when implicit in method call or composite literals.
 // - a[:] iff a is an array (not *array)
 // - references to variables in lexically enclosing functions.
+//
 func (b *builder) addr(fn *Function, e ast.Expr, escaping bool) lvalue {
 	switch e := e.(type) {
 	case *ast.Ident:
@@ -445,6 +450,7 @@ func (sb *storebuf) emit(fn *Function) {
 // storebuf sb so that they can be executed later.  This allows correct
 // in-place update of existing variables when the RHS is a composite
 // literal that may reference parts of the LHS.
+//
 func (b *builder) assign(fn *Function, loc lvalue, e ast.Expr, isZero bool, sb *storebuf) {
 	// Can we initialize it in place?
 	if e, ok := unparen(e).(*ast.CompositeLit); ok {
@@ -503,6 +509,7 @@ func (b *builder) assign(fn *Function, loc lvalue, e ast.Expr, isZero bool, sb *
 
 // expr lowers a single-result expression e to SSA form, emitting code
 // to fn and returning the Value defined by the expression.
+//
 func (b *builder) expr(fn *Function, e ast.Expr) Value {
 	e = unparen(e)
 
@@ -794,6 +801,7 @@ func (b *builder) stmtList(fn *Function, list []ast.Stmt) {
 // must thus be addressable.
 //
 // escaping is defined as per builder.addr().
+//
 func (b *builder) receiver(fn *Function, e ast.Expr, wantAddr, escaping bool, sel *types.Selection) Value {
 	var v Value
 	if wantAddr && !sel.Indirect() && !isPointer(fn.Pkg.typeOf(e)) {
@@ -813,6 +821,7 @@ func (b *builder) receiver(fn *Function, e ast.Expr, wantAddr, escaping bool, se
 // setCallFunc populates the function parts of a CallCommon structure
 // (Func, Method, Recv, Args[0]) based on the kind of invocation
 // occurring in e.
+//
 func (b *builder) setCallFunc(fn *Function, e *ast.CallExpr, c *CallCommon) {
 	c.pos = e.Lparen
 
@@ -875,6 +884,7 @@ func (b *builder) setCallFunc(fn *Function, e *ast.CallExpr, c *CallCommon) {
 // emitCallArgs emits to f code for the actual parameters of call e to
 // a (possibly built-in) function of effective type sig.
 // The argument values are appended to args, which is then returned.
+//
 func (b *builder) emitCallArgs(fn *Function, sig *types.Signature, e *ast.CallExpr, args []Value) []Value {
 	// f(x, y, z...): pass slice z straight through.
 	if e.Ellipsis != 0 {
@@ -946,6 +956,7 @@ func (b *builder) emitCallArgs(fn *Function, sig *types.Signature, e *ast.CallEx
 
 // setCall emits to fn code to evaluate all the parameters of a function
 // call e, and populates *c with those values.
+//
 func (b *builder) setCall(fn *Function, e *ast.CallExpr, c *CallCommon) {
 	// First deal with the f(...) part and optional receiver.
 	b.setCallFunc(fn, e, c)
@@ -966,6 +977,7 @@ func (b *builder) assignOp(fn *Function, loc lvalue, val Value, op token.Token, 
 
 // localValueSpec emits to fn code to define all of the vars in the
 // function-local ValueSpec, spec.
+//
 func (b *builder) localValueSpec(fn *Function, spec *ast.ValueSpec) {
 	switch {
 	case len(spec.Values) == len(spec.Names):
@@ -1008,6 +1020,7 @@ func (b *builder) localValueSpec(fn *Function, spec *ast.ValueSpec) {
 // isDef is true if this is a short variable declaration (:=).
 //
 // Note the similarity with localValueSpec.
+//
 func (b *builder) assignStmt(fn *Function, lhss, rhss []ast.Expr, isDef bool) {
 	// Side effects of all LHSs and RHSs must occur in left-to-right order.
 	lvals := make([]lvalue, len(lhss))
@@ -1073,10 +1086,8 @@ func (b *builder) arrayLen(fn *Function, elts []ast.Expr) int64 {
 //
 // Because the elements of a composite literal may refer to the
 // variables being updated, as in the second line below,
-//
 //	x := T{a: 1}
 //	x = T{a: x.a}
-//
 // all the reads must occur before all the writes.  Thus all stores to
 // loc are emitted to the storebuf sb for later execution.
 //
@@ -1084,6 +1095,7 @@ func (b *builder) arrayLen(fn *Function, elts []ast.Expr) int64 {
 // case when the type name is implicit.  e.g. in []*T{{}}, the inner
 // literal has type *T behaves like &T{}.
 // In that case, addr must hold a T, not a *T.
+//
 func (b *builder) compLit(fn *Function, addr Value, e *ast.CompositeLit, isZero bool, sb *storebuf) {
 	typ := deref(fn.Pkg.typeOf(e))
 	switch t := typ.Underlying().(type) {
@@ -1222,6 +1234,7 @@ func (b *builder) compLit(fn *Function, addr Value, e *ast.CompositeLit, isZero 
 
 // switchStmt emits to fn code for the switch statement s, optionally
 // labelled by label.
+//
 func (b *builder) switchStmt(fn *Function, s *ast.SwitchStmt, label *lblock) {
 	// We treat SwitchStmt like a sequential if-else chain.
 	// Multiway dispatch can be recovered later by ssautil.Switches()
@@ -1307,6 +1320,7 @@ func (b *builder) switchStmt(fn *Function, s *ast.SwitchStmt, label *lblock) {
 
 // typeSwitchStmt emits to fn code for the type switch statement s, optionally
 // labelled by label.
+//
 func (b *builder) typeSwitchStmt(fn *Function, s *ast.TypeSwitchStmt, label *lblock) {
 	// We treat TypeSwitchStmt like a sequential if-else chain.
 	// Multiway dispatch can be recovered later by ssautil.Switches().
@@ -1430,6 +1444,7 @@ func (b *builder) typeCaseBody(fn *Function, cc *ast.CaseClause, x Value, done *
 
 // selectStmt emits to fn code for the select statement s, optionally
 // labelled by label.
+//
 func (b *builder) selectStmt(fn *Function, s *ast.SelectStmt, label *lblock) {
 	// A blocking select of a single case degenerates to a
 	// simple send or receive.
@@ -1611,6 +1626,7 @@ func (b *builder) selectStmt(fn *Function, s *ast.SelectStmt, label *lblock) {
 
 // forStmt emits to fn code for the for statement s, optionally
 // labelled by label.
+//
 func (b *builder) forStmt(fn *Function, s *ast.ForStmt, label *lblock) {
 	//	...init...
 	//      jump loop
@@ -1667,6 +1683,7 @@ func (b *builder) forStmt(fn *Function, s *ast.ForStmt, label *lblock) {
 // over array, *array or slice value x.
 // The v result is defined only if tv is non-nil.
 // forPos is the position of the "for" token.
+//
 func (b *builder) rangeIndexed(fn *Function, x Value, tv types.Type, pos token.Pos) (k, v Value, loop, done *BasicBlock) {
 	//
 	//      length = len(x)
@@ -1758,6 +1775,7 @@ func (b *builder) rangeIndexed(fn *Function, x Value, tv types.Type, pos token.P
 // Range/Next/Extract to iterate over map or string value x.
 // tk and tv are the types of the key/value results k and v, or nil
 // if the respective component is not wanted.
+//
 func (b *builder) rangeIter(fn *Function, x Value, tk, tv types.Type, pos token.Pos) (k, v Value, loop, done *BasicBlock) {
 	//
 	//	it = range x
@@ -1821,6 +1839,7 @@ func (b *builder) rangeIter(fn *Function, x Value, tk, tv types.Type, pos token.
 // tk is the channel's element type, or nil if the k result is
 // not wanted
 // pos is the position of the '=' or ':=' token.
+//
 func (b *builder) rangeChan(fn *Function, x Value, tk types.Type, pos token.Pos) (k Value, loop, done *BasicBlock) {
 	//
 	// loop:                                   (target of continue)
@@ -1859,6 +1878,7 @@ func (b *builder) rangeChan(fn *Function, x Value, tk types.Type, pos token.Pos)
 
 // rangeStmt emits to fn code for the range statement s, optionally
 // labelled by label.
+//
 func (b *builder) rangeStmt(fn *Function, s *ast.RangeStmt, label *lblock) {
 	var tk, tv types.Type
 	if s.Key != nil && !isBlankIdent(s.Key) {
@@ -2189,6 +2209,7 @@ func (b *builder) buildFunction(fn *Function) {
 
 // buildFuncDecl builds SSA code for the function or method declared
 // by decl in package pkg.
+//
 func (b *builder) buildFuncDecl(pkg *Package, decl *ast.FuncDecl) {
 	id := decl.Name
 	if isBlankIdent(id) {
@@ -2211,6 +2232,7 @@ func (b *builder) buildFuncDecl(pkg *Package, decl *ast.FuncDecl) {
 // need only build a single package.
 //
 // Build is idempotent and thread-safe.
+//
 func (prog *Program) Build() {
 	var wg sync.WaitGroup
 	for _, p := range prog.packages {
@@ -2234,6 +2256,7 @@ func (prog *Program) Build() {
 // error-free).
 //
 // Build is idempotent and thread-safe.
+//
 func (p *Package) Build() { p.buildOnce.Do(p.build) }
 
 func (p *Package) build() {

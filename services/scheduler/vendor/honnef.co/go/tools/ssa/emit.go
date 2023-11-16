@@ -15,6 +15,7 @@ import (
 
 // emitNew emits to f a new (heap Alloc) instruction allocating an
 // object of type typ.  pos is the optional source location.
+//
 func emitNew(f *Function, typ types.Type, pos token.Pos) *Alloc {
 	v := &Alloc{Heap: true}
 	v.setType(types.NewPointer(typ))
@@ -25,6 +26,7 @@ func emitNew(f *Function, typ types.Type, pos token.Pos) *Alloc {
 
 // emitLoad emits to f an instruction to load the address addr into a
 // new temporary, and returns the value so defined.
+//
 func emitLoad(f *Function, addr Value) *UnOp {
 	v := &UnOp{Op: token.MUL, X: addr}
 	v.setType(deref(addr.Type()))
@@ -34,6 +36,7 @@ func emitLoad(f *Function, addr Value) *UnOp {
 
 // emitDebugRef emits to f a DebugRef pseudo-instruction associating
 // expression e with value v.
+//
 func emitDebugRef(f *Function, e ast.Expr, v Value, isAddr bool) {
 	if !f.debugInfo() {
 		return // debugging not enabled
@@ -65,6 +68,7 @@ func emitDebugRef(f *Function, e ast.Expr, v Value, isAddr bool) {
 // where op is an eager shift, logical or arithmetic operation.
 // (Use emitCompare() for comparisons and Builder.logicalBinop() for
 // non-eager operations.)
+//
 func emitArith(f *Function, op token.Token, x, y Value, t types.Type, pos token.Pos) Value {
 	switch op {
 	case token.SHL, token.SHR:
@@ -95,6 +99,7 @@ func emitArith(f *Function, op token.Token, x, y Value, t types.Type, pos token.
 
 // emitCompare emits to f code compute the boolean result of
 // comparison comparison 'x op y'.
+//
 func emitCompare(f *Function, op token.Token, x, y Value, pos token.Pos) Value {
 	xt := x.Type().Underlying()
 	yt := y.Type().Underlying()
@@ -140,6 +145,7 @@ func emitCompare(f *Function, op token.Token, x, y Value, pos token.Pos) Value {
 // isValuePreserving returns true if a conversion from ut_src to
 // ut_dst is value-preserving, i.e. just a change of type.
 // Precondition: neither argument is a named type.
+//
 func isValuePreserving(ut_src, ut_dst types.Type) bool {
 	// Identical underlying types?
 	if structTypesIdentical(ut_dst, ut_src) {
@@ -164,6 +170,7 @@ func isValuePreserving(ut_src, ut_dst types.Type) bool {
 // and returns the converted value.  Implicit conversions are required
 // by language assignability rules in assignments, parameter passing,
 // etc.  Conversions cannot fail dynamically.
+//
 func emitConv(f *Function, val Value, typ types.Type) Value {
 	t_src := val.Type()
 
@@ -238,6 +245,7 @@ func emitConv(f *Function, val Value, typ types.Type) Value {
 
 // emitStore emits to f an instruction to store value val at location
 // addr, applying implicit conversions as required by assignability rules.
+//
 func emitStore(f *Function, addr, val Value, pos token.Pos) *Store {
 	s := &Store{
 		Addr: addr,
@@ -250,6 +258,7 @@ func emitStore(f *Function, addr, val Value, pos token.Pos) *Store {
 
 // emitJump emits to f a jump to target, and updates the control-flow graph.
 // Postcondition: f.currentBlock is nil.
+//
 func emitJump(f *Function, target *BasicBlock) {
 	b := f.currentBlock
 	b.emit(new(Jump))
@@ -260,6 +269,7 @@ func emitJump(f *Function, target *BasicBlock) {
 // emitIf emits to f a conditional jump to tblock or fblock based on
 // cond, and updates the control-flow graph.
 // Postcondition: f.currentBlock is nil.
+//
 func emitIf(f *Function, cond Value, tblock, fblock *BasicBlock) {
 	b := f.currentBlock
 	b.emit(&If{Cond: cond})
@@ -270,6 +280,7 @@ func emitIf(f *Function, cond Value, tblock, fblock *BasicBlock) {
 
 // emitExtract emits to f an instruction to extract the index'th
 // component of tuple.  It returns the extracted value.
+//
 func emitExtract(f *Function, tuple Value, index int) Value {
 	e := &Extract{Tuple: tuple, Index: index}
 	e.setType(tuple.Type().(*types.Tuple).At(index).Type())
@@ -278,6 +289,7 @@ func emitExtract(f *Function, tuple Value, index int) Value {
 
 // emitTypeAssert emits to f a type assertion value := x.(t) and
 // returns the value.  x.Type() must be an interface.
+//
 func emitTypeAssert(f *Function, x Value, t types.Type, pos token.Pos) Value {
 	a := &TypeAssert{X: x, AssertedType: t}
 	a.setPos(pos)
@@ -287,6 +299,7 @@ func emitTypeAssert(f *Function, x Value, t types.Type, pos token.Pos) Value {
 
 // emitTypeTest emits to f a type test value,ok := x.(t) and returns
 // a (value, ok) tuple.  x.Type() must be an interface.
+//
 func emitTypeTest(f *Function, x Value, t types.Type, pos token.Pos) Value {
 	a := &TypeAssert{
 		X:            x,
@@ -306,6 +319,7 @@ func emitTypeTest(f *Function, x Value, t types.Type, pos token.Pos) Value {
 // Intended for wrapper methods.
 // Precondition: f does/will not use deferred procedure calls.
 // Postcondition: f.currentBlock is nil.
+//
 func emitTailCall(f *Function, call *Call) {
 	tresults := f.Signature.Results()
 	nr := tresults.Len()
@@ -342,6 +356,7 @@ func emitTailCall(f *Function, call *Call) {
 // If v is the address of a struct, the result will be the address of
 // a field; if it is the value of a struct, the result will be the
 // value of a field.
+//
 func emitImplicitSelections(f *Function, v Value, indices []int) Value {
 	for _, index := range indices {
 		fld := deref(v.Type()).Underlying().(*types.Struct).Field(index)
@@ -375,6 +390,7 @@ func emitImplicitSelections(f *Function, v Value, indices []int) Value {
 // will be the field's address; otherwise the result will be the
 // field's value.
 // Ident id is used for position and debug info.
+//
 func emitFieldSelection(f *Function, v Value, index int, wantAddr bool, id *ast.Ident) Value {
 	fld := deref(v.Type()).Underlying().(*types.Struct).Field(index)
 	if isPointer(v.Type()) {
@@ -404,6 +420,7 @@ func emitFieldSelection(f *Function, v Value, index int, wantAddr bool, id *ast.
 
 // zeroValue emits to f code to produce a zero value of type t,
 // and returns it.
+//
 func zeroValue(f *Function, t types.Type) Value {
 	switch t.Underlying().(type) {
 	case *types.Struct, *types.Array:
@@ -421,6 +438,7 @@ func zeroValue(f *Function, t types.Type) Value {
 // type.
 //
 // Idempotent.
+//
 func createRecoverBlock(f *Function) {
 	if f.Recover != nil {
 		return // already created

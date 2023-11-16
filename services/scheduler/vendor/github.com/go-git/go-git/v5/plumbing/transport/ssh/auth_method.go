@@ -238,13 +238,11 @@ func (a *PublicKeysCallback) ClientConfig() (*ssh.ClientConfig, error) {
 //
 // If list of files is empty, then it will be read from the SSH_KNOWN_HOSTS
 // environment variable, example:
-//
-//	/home/foo/custom_known_hosts_file:/etc/custom_known/hosts_file
+//   /home/foo/custom_known_hosts_file:/etc/custom_known/hosts_file
 //
 // If SSH_KNOWN_HOSTS is not set the following file locations will be used:
-//
-//	~/.ssh/known_hosts
-//	/etc/ssh/ssh_known_hosts
+//   ~/.ssh/known_hosts
+//   /etc/ssh/ssh_known_hosts
 func NewKnownHostsCallback(files ...string) (ssh.HostKeyCallback, error) {
 	var err error
 

@@ -33,6 +33,7 @@ type Transfer struct {
 //	dnscon := &dns.Conn{Conn:con}
 //	transfer = &dns.Transfer{Conn: dnscon}
 //	channel, err := transfer.In(message, master)
+//
 func (t *Transfer) In(q *Msg, a string) (env chan *Envelope, err error) {
 	switch q.Question[0].Qtype {
 	case TypeAXFR, TypeIXFR:

@@ -446,11 +446,12 @@ func LintIfReturn(pass *analysis.Pass) (interface{}, error) {
 
 // LintRedundantNilCheckWithLen checks for the following reduntant nil-checks:
 //
-//	if x == nil || len(x) == 0 {}
-//	if x != nil && len(x) != 0 {}
-//	if x != nil && len(x) == N {} (where N != 0)
-//	if x != nil && len(x) > N {}
-//	if x != nil && len(x) >= N {} (where N != 0)
+//   if x == nil || len(x) == 0 {}
+//   if x != nil && len(x) != 0 {}
+//   if x != nil && len(x) == N {} (where N != 0)
+//   if x != nil && len(x) > N {}
+//   if x != nil && len(x) >= N {} (where N != 0)
+//
 func LintRedundantNilCheckWithLen(pass *analysis.Pass) (interface{}, error) {
 	isConstZero := func(expr ast.Expr) (isConst bool, isZero bool) {
 		_, ok := expr.(*ast.BasicLit)

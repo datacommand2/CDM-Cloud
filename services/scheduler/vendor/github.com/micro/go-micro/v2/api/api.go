@@ -176,7 +176,7 @@ func NewGateway() Gateway {
 //
 // Usage:
 //
-//	proto.RegisterHandler(service.Server(), new(Handler), api.WithEndpoint(
+// 	proto.RegisterHandler(service.Server(), new(Handler), api.WithEndpoint(
 //		&api.Endpoint{
 //			Name: "Greeter.Hello",
 //			Path: []string{"/greeter"},

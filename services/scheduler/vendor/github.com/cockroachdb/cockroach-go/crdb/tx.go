@@ -49,25 +49,25 @@ import (
 // following snippet, the original retryable error will be masked by the call to
 // fmt.Errorf, and the transaction will not be automatically retried.
 //
-//	crdb.Execute(func () error {
-//	    rows, err := db.QueryContext(ctx, "SELECT ...")
-//	    if err != nil {
-//	        return fmt.Errorf("scanning row: %s", err)
-//	    }
-//	    defer rows.Close()
-//	    for rows.Next() {
-//	        // ...
-//	    }
-//	    if err := rows.Err(); err != nil {
-//	        return fmt.Errorf("scanning row: %s", err)
-//	    }
-//	    return nil
-//	})
+//    crdb.Execute(func () error {
+//        rows, err := db.QueryContext(ctx, "SELECT ...")
+//        if err != nil {
+//            return fmt.Errorf("scanning row: %s", err)
+//        }
+//        defer rows.Close()
+//        for rows.Next() {
+//            // ...
+//        }
+//        if err := rows.Err(); err != nil {
+//            return fmt.Errorf("scanning row: %s", err)
+//        }
+//        return nil
+//    })
 //
 // Instead, add context by returning an error that implements either:
-//   - a `Cause() error` method, in the manner of github.com/pkg/errors, or
-//   - an `Unwrap() error` method, in the manner of the Go 1.13 standard
-//     library.
+// - a `Cause() error` method, in the manner of github.com/pkg/errors, or
+// - an `Unwrap() error` method, in the manner of the Go 1.13 standard
+//   library.
 //
 // To achieve this, you can implement your own error type, or use
 // `errors.Wrap()` from github.com/pkg/errors or
@@ -75,22 +75,23 @@ import (
 // 1.13's special `%w` formatter with fmt.Errorf(), for example
 // fmt.Errorf("scanning row: %w", err).
 //
-//	import "github.com/pkg/errors"
+//    import "github.com/pkg/errors"
 //
-//	crdb.Execute(func () error {
-//	    rows, err := db.QueryContext(ctx, "SELECT ...")
-//	    if err != nil {
-//	        return errors.Wrap(err, "scanning row")
-//	    }
-//	    defer rows.Close()
-//	    for rows.Next() {
-//	        // ...
-//	    }
-//	    if err := rows.Err(); err != nil {
-//	        return errors.Wrap(err, "scanning row")
-//	    }
-//	    return nil
-//	})
+//    crdb.Execute(func () error {
+//        rows, err := db.QueryContext(ctx, "SELECT ...")
+//        if err != nil {
+//            return errors.Wrap(err, "scanning row")
+//        }
+//        defer rows.Close()
+//        for rows.Next() {
+//            // ...
+//        }
+//        if err := rows.Err(); err != nil {
+//            return errors.Wrap(err, "scanning row")
+//        }
+//        return nil
+//    })
+//
 func Execute(fn func() error) (err error) {
 	for {
 		err = fn()
@@ -123,17 +124,17 @@ func Execute(fn func() error) (err error) {
 // following snippet, the original retryable error will be masked by the call to
 // fmt.Errorf, and the transaction will not be automatically retried.
 //
-//	crdb.ExecuteTx(ctx, db, txopts, func (tx *sql.Tx) error {
-//	    if err := tx.ExecContext(ctx, "UPDATE..."); err != nil {
-//	        return fmt.Errorf("updating record: %s", err)
-//	    }
-//	    return nil
-//	})
+//    crdb.ExecuteTx(ctx, db, txopts, func (tx *sql.Tx) error {
+//        if err := tx.ExecContext(ctx, "UPDATE..."); err != nil {
+//            return fmt.Errorf("updating record: %s", err)
+//        }
+//        return nil
+//    })
 //
 // Instead, add context by returning an error that implements either:
-//   - a `Cause() error` method, in the manner of github.com/pkg/errors, or
-//   - an `Unwrap() error` method, in the manner of the Go 1.13 standard
-//     library.
+// - a `Cause() error` method, in the manner of github.com/pkg/errors, or
+// - an `Unwrap() error` method, in the manner of the Go 1.13 standard
+//   library.
 //
 // To achieve this, you can implement your own error type, or use
 // `errors.Wrap()` from github.com/pkg/errors or
@@ -141,14 +142,15 @@ func Execute(fn func() error) (err error) {
 // 1.13's special `%w` formatter with fmt.Errorf(), for example
 // fmt.Errorf("scanning row: %w", err).
 //
-//	import "github.com/pkg/errors"
+//    import "github.com/pkg/errors"
 //
-//	crdb.ExecuteTx(ctx, db, txopts, func (tx *sql.Tx) error {
-//	    if err := tx.ExecContext(ctx, "UPDATE..."); err != nil {
-//	        return errors.Wrap(err, "updating record")
-//	    }
-//	    return nil
-//	})
+//    crdb.ExecuteTx(ctx, db, txopts, func (tx *sql.Tx) error {
+//        if err := tx.ExecContext(ctx, "UPDATE..."); err != nil {
+//            return errors.Wrap(err, "updating record")
+//        }
+//        return nil
+//    })
+//
 func ExecuteTx(ctx context.Context, db *sql.DB, opts *sql.TxOptions, fn func(*sql.Tx) error) error {
 	// Start a transaction.
 	tx, err := db.BeginTx(ctx, opts)

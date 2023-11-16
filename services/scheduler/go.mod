@@ -10,6 +10,7 @@ require (
 	github.com/gorhill/cronexpr v0.0.0-20180427100037-88b0669f7d75
 	github.com/jinzhu/gorm v1.9.16
 	github.com/micro/go-micro/v2 v2.9.1
-	github.com/stretchr/testify v1.8.1 // indirect
-	google.golang.org/protobuf v1.28.1
+	github.com/robfig/cron/v3 v3.0.1
+	google.golang.org/protobuf v1.27.1
+
 )

@@ -149,13 +149,13 @@ func ReadRR(r io.Reader, file string) (RR, error) {
 // Basic usage pattern when reading from a string (z) containing the
 // zone data:
 //
-//		for x := range dns.ParseZone(strings.NewReader(z), "", "") {
-//			if x.Error != nil {
-//	                 // log.Println(x.Error)
-//	             } else {
-//	                 // Do something with x.RR
-//	             }
-//		}
+//	for x := range dns.ParseZone(strings.NewReader(z), "", "") {
+//		if x.Error != nil {
+//                  // log.Println(x.Error)
+//              } else {
+//                  // Do something with x.RR
+//              }
+//	}
 //
 // Comments specified after an RR (and on the same line!) are
 // returned too:
@@ -247,7 +247,7 @@ type ZoneParser struct {
 
 	includeDepth uint8
 
-	includeAllowed     bool
+	includeAllowed bool
 	generateDisallowed bool
 }
 

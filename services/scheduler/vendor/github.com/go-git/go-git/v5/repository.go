@@ -710,20 +710,21 @@ func (r *Repository) buildTagSignature(tag *object.Tag, signKey *openpgp.Entity)
 // If you want to check to see if the tag is an annotated tag, you can call
 // TagObject on the hash of the reference in ForEach:
 //
-//	ref, err := r.Tag("v0.1.0")
-//	if err != nil {
-//	  // Handle error
-//	}
+//   ref, err := r.Tag("v0.1.0")
+//   if err != nil {
+//     // Handle error
+//   }
 //
-//	obj, err := r.TagObject(ref.Hash())
-//	switch err {
-//	case nil:
-//	  // Tag object present
-//	case plumbing.ErrObjectNotFound:
-//	  // Not a tag object
-//	default:
-//	  // Some other error
-//	}
+//   obj, err := r.TagObject(ref.Hash())
+//   switch err {
+//   case nil:
+//     // Tag object present
+//   case plumbing.ErrObjectNotFound:
+//     // Not a tag object
+//   default:
+//     // Some other error
+//   }
+//
 func (r *Repository) Tag(name string) (*plumbing.Reference, error) {
 	ref, err := r.Reference(plumbing.ReferenceName(path.Join("refs", "tags", name)), false)
 	if err != nil {
@@ -1196,25 +1197,26 @@ func commitIterFunc(order LogOrder) func(c *object.Commit) object.CommitIter {
 // If you want to check to see if the tag is an annotated tag, you can call
 // TagObject on the hash Reference passed in through ForEach:
 //
-//	iter, err := r.Tags()
-//	if err != nil {
-//	  // Handle error
-//	}
+//   iter, err := r.Tags()
+//   if err != nil {
+//     // Handle error
+//   }
 //
-//	if err := iter.ForEach(func (ref *plumbing.Reference) error {
-//	  obj, err := r.TagObject(ref.Hash())
-//	  switch err {
-//	  case nil:
-//	    // Tag object present
-//	  case plumbing.ErrObjectNotFound:
-//	    // Not a tag object
-//	  default:
-//	    // Some other error
-//	    return err
-//	  }
-//	}); err != nil {
-//	  // Handle outer iterator error
-//	}
+//   if err := iter.ForEach(func (ref *plumbing.Reference) error {
+//     obj, err := r.TagObject(ref.Hash())
+//     switch err {
+//     case nil:
+//       // Tag object present
+//     case plumbing.ErrObjectNotFound:
+//       // Not a tag object
+//     default:
+//       // Some other error
+//       return err
+//     }
+//   }); err != nil {
+//     // Handle outer iterator error
+//   }
+//
 func (r *Repository) Tags() (storer.ReferenceIter, error) {
 	refIter, err := r.Storer.IterReferences()
 	if err != nil {

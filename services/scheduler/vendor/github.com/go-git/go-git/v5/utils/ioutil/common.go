@@ -155,7 +155,7 @@ func NewWriterOnError(w io.Writer, notify func(error)) io.Writer {
 }
 
 // NewWriteCloserOnError returns a io.WriteCloser that call the notify function
-// when an unexpected (!io.EOF) error happens, after call Write function.
+//when an unexpected (!io.EOF) error happens, after call Write function.
 func NewWriteCloserOnError(w io.WriteCloser, notify func(error)) io.WriteCloser {
 	return NewWriteCloser(NewWriterOnError(w, notify), w)
 }

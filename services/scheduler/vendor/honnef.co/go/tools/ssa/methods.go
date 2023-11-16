@@ -20,6 +20,7 @@ import (
 // Thread-safe.
 //
 // EXCLUSIVE_LOCKS_ACQUIRED(prog.methodsMu)
+//
 func (prog *Program) MethodValue(sel *types.Selection) *Function {
 	if sel.Kind() != types.MethodVal {
 		panic(fmt.Sprintf("MethodValue(%s) kind != MethodVal", sel))
@@ -41,6 +42,7 @@ func (prog *Program) MethodValue(sel *types.Selection) *Function {
 // LookupMethod returns the implementation of the method of type T
 // identified by (pkg, name).  It returns nil if the method exists but
 // is abstract, and panics if T has no such method.
+//
 func (prog *Program) LookupMethod(T types.Type, pkg *types.Package, name string) *Function {
 	sel := prog.MethodSets.MethodSet(T).Lookup(pkg, name)
 	if sel == nil {
@@ -98,6 +100,7 @@ func (prog *Program) addMethod(mset *methodSet, sel *types.Selection) *Function 
 // Thread-safe.
 //
 // EXCLUSIVE_LOCKS_ACQUIRED(prog.methodsMu)
+//
 func (prog *Program) RuntimeTypes() []types.Type {
 	prog.methodsMu.Lock()
 	defer prog.methodsMu.Unlock()
@@ -113,6 +116,7 @@ func (prog *Program) RuntimeTypes() []types.Type {
 
 // declaredFunc returns the concrete function/method denoted by obj.
 // Panic ensues if there is none.
+//
 func (prog *Program) declaredFunc(obj *types.Func) *Function {
 	if v := prog.packageLevelValue(obj); v != nil {
 		return v.(*Function)
@@ -135,6 +139,7 @@ func (prog *Program) declaredFunc(obj *types.Func) *Function {
 // TODO(adonovan): make this faster.  It accounts for 20% of SSA build time.
 //
 // EXCLUSIVE_LOCKS_ACQUIRED(prog.methodsMu)
+//
 func (prog *Program) needMethodsOf(T types.Type) {
 	prog.methodsMu.Lock()
 	prog.needMethods(T, false)
@@ -145,6 +150,7 @@ func (prog *Program) needMethodsOf(T types.Type) {
 // Recursive case: skip => don't create methods for T.
 //
 // EXCLUSIVE_LOCKS_REQUIRED(prog.methodsMu)
+//
 func (prog *Program) needMethods(T types.Type, skip bool) {
 	// Each package maintains its own set of types it has visited.
 	if prevSkip, ok := prog.runtimeTypes.At(T).(bool); ok {

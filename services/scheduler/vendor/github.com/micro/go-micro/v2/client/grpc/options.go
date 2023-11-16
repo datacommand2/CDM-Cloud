@@ -82,7 +82,9 @@ func AuthTLS(t *tls.Config) client.Option {
 	}
 }
 
+//
 // MaxRecvMsgSize set the maximum size of message that client can receive.
+//
 func MaxRecvMsgSize(s int) client.Option {
 	return func(o *client.Options) {
 		if o.Context == nil {
@@ -92,7 +94,9 @@ func MaxRecvMsgSize(s int) client.Option {
 	}
 }
 
+//
 // MaxSendMsgSize set the maximum size of message that client can send.
+//
 func MaxSendMsgSize(s int) client.Option {
 	return func(o *client.Options) {
 		if o.Context == nil {
@@ -102,7 +106,9 @@ func MaxSendMsgSize(s int) client.Option {
 	}
 }
 
+//
 // DialOptions to be used to configure gRPC dial options
+//
 func DialOptions(opts ...grpc.DialOption) client.CallOption {
 	return func(o *client.CallOptions) {
 		if o.Context == nil {
@@ -112,7 +118,9 @@ func DialOptions(opts ...grpc.DialOption) client.CallOption {
 	}
 }
 
+//
 // CallOptions to be used to configure gRPC call options
+//
 func CallOptions(opts ...grpc.CallOption) client.CallOption {
 	return func(o *client.CallOptions) {
 		if o.Context == nil {
