@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cdm-cloud-cockroach-ca
+type: kubernetes.io/tls
+data:
+  #ca/ca.crt 파일 base64 인코딩
+  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCekNDQWUrZ0F3SUJBZ0lSQUtHazAzSk00RFlCcXJUMDR3K0FDZUF3RFFZSktvWklodmNOQVFFTEJRQXcKS3pFU01CQUdBMVVFQ2hNSlEyOWphM0p2WVdOb01SVXdFd1lEVlFRREV3eERiMk5yY205aFkyZ2dRMEV3SGhjTgpNakF3T1RFek1EQXlNelF3V2hjTk16QXdPVEl5TURBeU16UXdXakFyTVJJd0VBWURWUVFLRXdsRGIyTnJjbTloClkyZ3hGVEFUQmdOVkJBTVRERU52WTJ0eWIyRmphQ0JEUVRDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVAKQURDQ0FRb0NnZ0VCQU1WdlZZNU5GazRqQlFRVzZ0cUpkT1hEUWFUK2RrcEdnbDVadkZZcjNjQ3VnbXVkL3V1eQprK1I4b1B6cmZCdkxleFQvbnlUVHplUXF5MWxaWkd5S3NsUEw1QTRLSU84eXB6SFYwUU1HWDBpaUViUVhxa3JiCjdXci9TbnJCVUhBVS9tSDJjUTA1a2pDSjVCQkU2MVBWWXp1WlYwREwxakRyRFVmb1BvNy9CR2M0VmUxeFgwUGMKZEtQMjNMWmdnVzdpOXFtTkRNYXViUXBFZkxsYlZ3QkNxZkhHaU1ueTVzZU9idXdLRXJwZFh6eXRnTmR6TjRuYgpVZCtQWGNaVHU4azVZQXpmTHljanhyWStGcnVIdWIvT1o5U0RkZlphUmk1YWk1bkNscmNvSFhobkROa3gvSlc2CmJvTHFhdmpnWjM5RWxBNSt6bjJCeW1MdEtvMWhzN3JjZmQwQ0F3RUFBYU1tTUNRd0RnWURWUjBQQVFIL0JBUUQKQWdMa01CSUdBMVVkRXdFQi93UUlNQVlCQWY4Q0FRRXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBQTdUTVNkTgpNTTA2elJHYzg2OVNiWVFMQnR2SFh2Wi9VSkJhSTdtMGU2VDJCVmQwZ1VzZWxmWk5ieGp3QndENEV0aXZ2ZE45Clk2VjNyZDh5bGpRNkdCNWYzSW1DVStOSTdCM0pyRnhZdXJ5YjhWVDNDd1dWci85VUxNWGZwT3NCT1AydEV2WDMKRy9yMTEvbmhTRHh6OTNyWUJ0VXIxdDJvUFlsSnZUNnN3dzdqM1g3ckcrYktWeEJpZHo3Tkg3cnJvSFZQaWtQSwpmRGRraHc5ekQvdzJTekF1ZmZEWWJ0UmpWT251ZG9QQWFsdy9WTEo2REI0UzBIbVFrOVczZ2U1YmN6NDYzMFIzCnNkOFVzbDR1VmZhVzFpS2FDUkVBblJNUnNnd2tLR2FvbXplSEZUK3NpdGNrYXU3aUlYcWhWbnJxQnJZZFhSaHAKcGtadXNsNEl1MlZ5OHRnPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  #ca/ca.key 파일 base64 인코딩
+  tls.key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBeFc5VmprMFdUaU1GQkJicTJvbDA1Y05CcFA1MlNrYUNYbG04Vml2ZHdLNkNhNTMrCjY3S1Q1SHlnL090OEc4dDdGUCtmSk5QTjVDckxXVmxrYklxeVU4dmtEZ29nN3pLbk1kWFJBd1pmU0tJUnRCZXEKU3R2dGF2OUtlc0ZRY0JUK1lmWnhEVG1TTUlua0VFVHJVOVZqTzVsWFFNdldNT3NOUitnK2p2OEVaemhWN1hGZgpROXgwby9iY3RtQ0JidUwycVkwTXhxNXRDa1I4dVZ0WEFFS3A4Y2FJeWZMbXg0NXU3QW9TdWwxZlBLMkExM00zCmlkdFIzNDlkeGxPN3lUbGdETjh2SnlQR3RqNFd1NGU1djg1bjFJTjE5bHBHTGxxTG1jS1d0eWdkZUdjTTJUSDgKbGJwdWd1cHErT0JuZjBTVURuN09mWUhLWXUwcWpXR3p1dHg5M1FJREFRQUJBb0lCQUNqNjRmUkdkZUhFRFE5NwpQa1ljRCtKODg4d3VjUmticDRXejlJNmlUa1huTXZUcGQzY3V1dG5MTUpNdXdiVDNPRlgwZFBEczhhaHhaWUhuCk54djhjZVZJeGM1UU5lUFFUTG5nV3FEWkdyLzF1OXo0cUlVZlB4bGRZZlUyMk41YXpTNUNPOWIxNHkwbUFldUsKa3BuMUNjTGVJaWsxNWdDRFdWOWFpbG1kL3lqNVA5dFMzdzYzUnF3eVR0ZkQzSVJ2WHZKMWpCdjJMTkZtcEYrbAptckppTEZ2L1YzTDIxRFBUZkU0cFVaaDAwT2QzUDFTZjRTUjhzcjNjZW9FMnRuendibVU4UXViRkMwL00yY3VXCnJKbUNGT2JUNlUxcTNqL2gxMzV4WUpRUExtM3dTQWdGNnFSQ3ZBbjVQOVAxWUZTQk1GSmUxYWZ5L082bXpsUzUKTFV3c1dhRUNnWUVBenFCN09GNzZHNWs4cU0xQk1Ta3NuUmdTTlMvZTlRamtML3pjNGlXRkZGVkxnL0pDZmxtTQo1RktNSFg4QlFBSjRvTkU3VmdlRklCMHhXem9VV2R3NW14SUdMdDV5SWQ3WlE0V0NQUzgwajlGdkNmQ3JxeHVCCkwzLzJCMHZ2cjZxdlFuWXMvWDd0OC9CM1BhamYrRm1PaHNPc1NyZjFxS2J0N0RFd2lMMjVlM2tDZ1lFQTlKeVMKbHhwYzBTZzN1aTkrV0pxTldxVHBOUVNLZGxhalc0RUxRYTlPMFlLWE9JUEpmYk84MlNPMVo0YTBkQTlRZDllMgpMcC9CSHl5S3dXdDF5NEpRUmIrU3RVbkVoS25GeWtOMzdIWWd5ak5IbTdSTnlVeDQ1MFBFeVpUUTFuNVgzbWVtCmFxTnluRklaM1N6NW1PamxYZnF2dkd3TWs0WHFRcVFYWW81TUdJVUNnWUVBc3BLeFMwdVIvYzRXUlpCMk9nVnEKb0MzUWRwVHpySE5OdWtkZm9qWm81K1M3U2NKU1F4NGpqS1Btb2d0RVNreVljZXZCeXh6ZXFaMXhMWFZwWnl2VAp3VGYzamdRRFFWQjJGa3ZJL2hYUTZFWkpINThXemQ4TWE3KzhJaHczZm1zVjRtdDlnR3QxUExCaWJUQ0l0L3EyCkdiUDhMK3NDYlFvdmIwUW52Tld5K29rQ2dZQTlEL2pvRDRTc0VjWVhqRk9WK3I3ZXFkd3RoL3lvbmVnWnA1VVAKeUp0OFlZVXVibmVXRVpCTEJFYjhtUHZqSFErUld4LzNjNW5hRmx4cy9FNWpoeHhTelFmcWlZZXRObFJSc1pYMgpTV2JXRXdjRkwzVmJrdU43bDhkQUt3NFcvV01oK2UzcElQUXpZYXRqTXg3N3RPZk5GZzlZa2dCeHN6UlBmbmIzCisxMnpvUUtCZ0RDc2cwZVQ4SkFTVEZEMWxacHZiaWgrNUU1RzR6Q0o4aTN2NU9FSFpZeE1VQng0a291ck85bFIKdlE3cFFHcUxIaFVoK1hWRzIza0Q2Rk9pb1ZibWhZZmw5d2I2QjNDNGxMcG12bTVKczRJMGlwVXFNcTdIWmJMRgppNHRiYWVYRE5BeGJnbERkZGlSZWZaOVdFN3J3U0xKVDBZODhjSFN0b2JKMXFpVjVFSlpYCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdm-cloud-cockroach
+
+spec:
+  clusterIP: None
+  selector:
+    dns: cdm-cloud-cockroach
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cdm-cloud-cockroach
+  labels:
+    solution: cdm-cloud
+spec:
+  serviceName: cdm-cloud-cockroach
+  selector:
+    matchLabels:
+      app: cdm-cloud-cockroach  
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: cdm-cloud-cockroach 
+        dns: cdm-cloud-cockroach
+    spec:
+      restartPolicy: Always
+      containers:
+      - name : cdm-cloud-cockroach
+        image: # Enter the Docker image created from the included Dockerfile
+        env:
+          - name: CDM_SERVICE_ADVERTISE_PORT
+            value: "26257"
+
+          - name: CDM_SERVICE_NAME
+            value: cdm-cloud-cockroach
+
+          - name: COCKROACH_DEFAULT_USER
+            value: cdm
+
+          - name: COCKROACH_DEFAULT_PASS
+            value: pass
+
+          - name: COCKROACH_DEFAULT_DATABASE
+            value: cdm
+
+          - name: COCKROACH_REPLICATOR_DATABASE
+            value: cdm_replicator
+
+          - name: COCKROACH_INSECURE
+            value: "false"
+
+          - name: KUBE_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace 
+
+          - name: ORCHESTRATION_TOOL
+            value: kubernetes
+
+        volumeMounts:
+          - name: cockroach-ca
+            mountPath: "/root/.cockroach-cert/ca.key"
+            subPath: "ca.key"
+
+          - name: cockroach-ca
+            mountPath: "/root/.cockroach-cert/ca.crt"
+            subPath: "ca.crt"
+
+        - name: cockroach-ca
+          secret:
+            secretName: cdm-cloud-cockroach-ca
+            items:
+              - key: tls.crt
+                path: ca.crt
+
+              - key: tls.key
+                path: ca.key 

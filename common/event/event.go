@@ -41,7 +41,7 @@ func WithContents(contents interface{}) Option {
 //	var bytes []byte
 //	var err error
 //	if opt.contents != nil {
-//		if bytes, err = json.Marshal(&opt.contents); err != nil {
+//		if bytes, err = json.Marshal(&opt.contents); err != nil {za
 //			return err
 //		}
 //		event.Contents = string(bytes)

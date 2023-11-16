@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+    cdm-cloud-etcd:
+        image: # Enter the Docker image created from the included Dockerfile
+        environment:
+            CDM_SERVICE_NAME: cdm-cloud-etcd
+            CDM_SERVICE_ADVERTISE_PORT: 2379
+            ETCD_ID: '{{.Task.Slot}}'
+            ETCD_USER: cdm_cloud
+            ETCD_PASSWORD: cdm_cloud
+        deploy: 
+            mode: replicated
+            replicas: 3
+        networks:
+            - cdmnetwork
+            
+networks:
+  cdmnetwork:
+    driver: weaveworks/net-plugin:2.6.5
+    attachable: true

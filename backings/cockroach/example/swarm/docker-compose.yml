@@ -1,0 +1,68 @@
+version: "3.8"
+services:
+  cockroach-1:
+    image: # Enter the Docker image created from the included Dockerfile
+    hostname: tasks.cockroach-1
+    environment:
+      - COCKROACH_ROLE=LEADER
+      - COCKROACH_LEADER_NODENAME=tasks.cockroach-1
+      #Don't use "COCKROACH_USER"
+      - COCKROACH_DEFAULT_USER=cdm
+      - COCKROACH_DEFAULT_PASS=pass
+      - COCKROACH_DEFAULT_DATABASE=cdm
+      - COCKROACH_REPLICATOR_DATABASE=cdm_replicator
+      - COCKROACH_INSECURE=false
+    volumes:
+      - cockroachdb-1:/cockroach/cockroach-data
+    secrets:
+      - source: cdm-cloud-ca.crt
+        target: /root/.cockroach-cert/ca.crt
+      - source: cdm-cloud-ca.key
+        target: /root/.cockroach-cert/ca.key
+
+  cockroach-2:
+    image: # Enter the Docker image created from the included Dockerfile
+    hostname: tasks.cockroach-2
+    volumes:
+      - cockroachdb-2:/cockroach/cockroach-data
+    environment:
+      - COCKROACH_ROLE=FOLLOWER
+      - COCKROACH_LEADER_NODENAME=tasks.cockroach-1
+      - COCKROACH_INSECURE=false
+    secrets:
+      - source: cdm-cloud-ca.crt
+        target: /root/.cockroach-cert/ca.crt
+      - source: cdm-cloud-ca.key
+        target: /root/.cockroach-cert/ca.key
+        
+  cockroach-3:
+    image: # Enter the Docker image created from the included Dockerfile
+    hostname: tasks.cockroach-3
+    volumes:
+      - cockroachdb-3:/cockroach/cockroach-data
+    environment:
+      - COCKROACH_ROLE=FOLLOWER
+      - COCKROACH_LEADER_NODENAME=tasks.cockroach-1
+      - COCKROACH_INSECURE=false
+    secrets:
+      - source: cdm-cloud-ca.crt
+        target: /root/.cockroach-cert/ca.crt
+      - source: cdm-cloud-ca.key
+        target: /root/.cockroach-cert/ca.key
+
+#mount 경로 TODO -ceph
+volumes:
+ cockroachdb-1:
+ cockroachdb-2:
+ cockroachdb-3:
+
+networks:
+  default:
+    driver: weaveworks/net-plugin:2.6.5
+    attachable: true
+
+secrets:
+  cdm-cloud-ca.crt:
+    external: true
+  cdm-cloud-ca.key:
+    external: true
