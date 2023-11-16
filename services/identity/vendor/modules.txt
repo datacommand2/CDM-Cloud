@@ -46,7 +46,7 @@ github.com/coreos/go-systemd/journal
 github.com/coreos/pkg/capnslog
 # github.com/cpuguy83/go-md2man/v2 v2.0.0
 github.com/cpuguy83/go-md2man/v2/md2man
-# github.com/datacommand2/cdm-cloud/common v0.0.0-20231116045224-15deb31e11c1
+# github.com/datacommand2/cdm-cloud/common v0.0.0-20231116053807-138bc179eb3f
 ## explicit
 github.com/datacommand2/cdm-cloud/common
 github.com/datacommand2/cdm-cloud/common/broker
@@ -146,7 +146,6 @@ github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
 github.com/golang/protobuf/ptypes/wrappers
 # github.com/google/uuid v1.3.0
-## explicit
 github.com/google/uuid
 # github.com/hashicorp/hcl v1.0.0
 github.com/hashicorp/hcl
@@ -329,8 +328,6 @@ github.com/sethvargo/go-password/password
 github.com/shurcooL/sanitized_anchor_name
 # github.com/streadway/amqp v1.0.0
 github.com/streadway/amqp
-# github.com/stretchr/testify v1.7.0
-## explicit
 # github.com/xanzy/ssh-agent v0.2.1
 github.com/xanzy/ssh-agent
 # go.uber.org/atomic v1.5.0

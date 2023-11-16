@@ -3,6 +3,7 @@ package errors
 import (
 	"context"
 	"github.com/datacommand2/cdm-cloud/common/metadata"
+	identity "github.com/datacommand2/cdm-cloud/services/identity/proto"
 )
 
 var (
