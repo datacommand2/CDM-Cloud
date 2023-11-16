@@ -5,6 +5,7 @@ go 1.14
 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
 require (
+
 	github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef
 	github.com/casbin/casbin/v2 v2.19.8
 	github.com/casbin/gorm-adapter/v2 v2.1.0

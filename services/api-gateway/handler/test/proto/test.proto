@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package testp;
+option go_package = ".;testp";
+
+import "google/api/annotations.proto";
+
+service Test {
+	rpc PutTest(TestMessage) returns (Empty){
+		option (google.api.http) = { put: "/put"; body:"*"; };
+	}
+	rpc GetTest(Empty) returns (Empty){
+		option (google.api.http) = { get: "/get"; body:"*"; };
+	}
+	rpc DeleteTest(Empty) returns (Empty){
+		option (google.api.http) = { delete: "/delete"; body:"*"; };
+	}
+	rpc PostTest(Empty) returns (Empty){
+		option (google.api.http) = { post: "/post"; body:"*"; };
+	}
+	rpc StreamTest(TestMessage) returns (stream TestMessage){
+		option (google.api.http) = { get: "/stream/{gid}";  };
+	}
+}
+
+message Empty {
+	
+}
+
+message TestId {
+	uint64 id = 1;
+}
+
+message TestMessage {
+	repeated TestId ids = 1;
+    string name = 2;
+    bool flag = 3;
+    uint64 gid = 4;
+}
