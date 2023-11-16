@@ -1,9 +1,10 @@
 package metadata
 
 import (
-	//identity "cdm/cdm-cloud/services/identity/proto"
 	"context"
+	"encoding/json"
 	"errors"
+	identity "github.com/datacommand2/cdm-cloud/services/identity/proto"
 	"github.com/google/uuid"
 	meta "github.com/micro/go-micro/v2/metadata"
 	"strconv"
@@ -33,19 +34,19 @@ func GetAuthenticatedSession(ctx context.Context) (string, error) {
 }
 
 // GetAuthenticatedUser 사용자 정보를 가져온다.
-//func GetAuthenticatedUser(ctx context.Context) (*identity.User, error) {
-//	v, ok := meta.Get(ctx, HeaderAuthenticatedUser)
-//	if !ok {
-//		return nil, ErrNotFound
-//	}
-//
-//	var user identity.User
-//	if err := json.Unmarshal([]byte(v), &user); err != nil {
-//		return nil, err
-//	}
-//
-//	return &user, nil
-//}
+func GetAuthenticatedUser(ctx context.Context) (*identity.User, error) {
+	v, ok := meta.Get(ctx, HeaderAuthenticatedUser)
+	if !ok {
+		return nil, ErrNotFound
+	}
+
+	var user identity.User
+	if err := json.Unmarshal([]byte(v), &user); err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
 
 // GetClientIP IP 정보를 가져온다.
 func GetClientIP(ctx context.Context) (string, error) {

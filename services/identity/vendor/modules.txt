@@ -46,7 +46,7 @@ github.com/coreos/go-systemd/journal
 github.com/coreos/pkg/capnslog
 # github.com/cpuguy83/go-md2man/v2 v2.0.0
 github.com/cpuguy83/go-md2man/v2/md2man
-# github.com/datacommand2/cdm-cloud/common v0.0.0-20231116043826-dcb4d64b8828
+# github.com/datacommand2/cdm-cloud/common v0.0.0-20231116045224-15deb31e11c1
 ## explicit
 github.com/datacommand2/cdm-cloud/common
 github.com/datacommand2/cdm-cloud/common/broker
@@ -62,11 +62,7 @@ github.com/datacommand2/cdm-cloud/common/metadata
 github.com/datacommand2/cdm-cloud/common/store
 github.com/datacommand2/cdm-cloud/common/sync
 github.com/datacommand2/cdm-cloud/common/sync/internal/etcd
-github.com/datacommand2/cdm-cloud/common/test
-github.com/datacommand2/cdm-cloud/common/test/helper
 github.com/datacommand2/cdm-cloud/common/util
-# github.com/davecgh/go-spew v1.1.1
-github.com/davecgh/go-spew/spew
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 github.com/dgrijalva/jwt-go
 # github.com/emirpasic/gods v1.12.0
@@ -196,7 +192,6 @@ github.com/lib/pq/scram
 github.com/micro/cli/v2
 # github.com/micro/go-micro/v2 v2.9.1
 ## explicit
-github.com/micro/go-micro/v2
 github.com/micro/go-micro/v2/api
 github.com/micro/go-micro/v2/auth
 github.com/micro/go-micro/v2/auth/jwt
@@ -248,15 +243,12 @@ github.com/micro/go-micro/v2/debug/log
 github.com/micro/go-micro/v2/debug/profile
 github.com/micro/go-micro/v2/debug/profile/http
 github.com/micro/go-micro/v2/debug/profile/pprof
-github.com/micro/go-micro/v2/debug/service/handler
-github.com/micro/go-micro/v2/debug/service/proto
 github.com/micro/go-micro/v2/debug/stats
 github.com/micro/go-micro/v2/debug/trace
 github.com/micro/go-micro/v2/debug/trace/memory
 github.com/micro/go-micro/v2/errors
 github.com/micro/go-micro/v2/logger
 github.com/micro/go-micro/v2/metadata
-github.com/micro/go-micro/v2/plugin
 github.com/micro/go-micro/v2/registry
 github.com/micro/go-micro/v2/registry/cache
 github.com/micro/go-micro/v2/registry/etcd
@@ -326,8 +318,6 @@ github.com/patrickmn/go-cache
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
-# github.com/pmezard/go-difflib v1.0.0
-github.com/pmezard/go-difflib/difflib
 # github.com/russross/blackfriday/v2 v2.0.1
 github.com/russross/blackfriday/v2
 # github.com/sergi/go-diff v1.1.0
@@ -341,7 +331,6 @@ github.com/shurcooL/sanitized_anchor_name
 github.com/streadway/amqp
 # github.com/stretchr/testify v1.7.0
 ## explicit
-github.com/stretchr/testify/assert
 # github.com/xanzy/ssh-agent v0.2.1
 github.com/xanzy/ssh-agent
 # go.uber.org/atomic v1.5.0
@@ -519,8 +508,6 @@ gopkg.in/tomb.v1
 gopkg.in/warnings.v0
 # gopkg.in/yaml.v2 v2.2.4
 gopkg.in/yaml.v2
-# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
-gopkg.in/yaml.v3
 # honnef.co/go/tools v0.0.1-2019.2.3
 honnef.co/go/tools/arg
 honnef.co/go/tools/cmd/staticcheck
