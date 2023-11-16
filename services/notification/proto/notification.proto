@@ -1,0 +1,218 @@
+syntax = "proto3";
+
+package notification;
+
+option go_package = "github.com/datacommand2/cdm-cloud/services/notification/proto;notification";
+
+import "google/api/annotations.proto";
+import "google/protobuf/wrappers.proto";
+
+service Notification {
+  rpc GetEvent(GetEventRequest) returns (GetEventResponse) {
+    option (google.api.http) = {get:"/notification/events/{event_id}"};
+  }
+
+  rpc GetEvents(GetEventsRequest) returns (GetEventsResponse) {
+    option (google.api.http) = {get:"/notification/events"};
+  }
+
+  rpc GetEventsStream(GetEventsStreamRequest) returns (stream GetEventsStreamResponse) {
+    option (google.api.http) = {get:"/notification/monitor"};
+  }
+
+  rpc GetEventClassifications(Empty) returns (GetEventClassificationsResponse) {
+    option (google.api.http) = {get:"/notification/event-classifications"};
+  }
+
+  rpc GetTenantEventReceives(GetEventReceivesRequest) returns (EventReceivesResponse) {
+    option (google.api.http) = {get:"/notification/config/receivers/tenant"};
+  }
+
+  rpc SetTenantEventReceives(EventReceivesRequest) returns (MessageResponse) {
+    option (google.api.http) = {patch:"/notification/config/receivers/tenant"; body:"*";};
+  }
+
+  rpc GetUserEventReceives(GetEventReceivesRequest) returns (EventReceivesResponse) {
+    option (google.api.http) = {get:"/notification/config/receivers/user"};
+  }
+
+  rpc SetUserEventReceives(EventReceivesRequest) returns (MessageResponse) {
+    option (google.api.http) = {patch:"/notification/config/receivers/user"; body:"*";};
+  }
+
+  rpc ResetUserEventReceives(Empty) returns (MessageResponse) {
+    option (google.api.http) = {post:"/notification/config/receivers/user-reset"};
+  }
+
+  rpc GetConfig(Empty) returns (GetConfigResponse) {
+    option (google.api.http) = {get:"/notification/config"};
+  }
+
+  rpc SetConfig(SetConfigRequest) returns (GetConfigResponse) {
+    option (google.api.http) = {put:"/notification/config"; body:"*";};
+  }
+}
+
+message Message {
+  string code = 1;
+  string contents = 2;
+}
+
+message Tenant {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message Event {
+  uint64 id = 1;
+  Tenant tenant = 2;
+  string code = 3;
+  string event_error = 4;
+  string contents = 5;
+  int64 created_at = 6;
+}
+
+message EventCode {
+  string code = 1;
+  string solution = 2;
+  string level = 3;
+  string class_1 = 4;
+  string class_2 = 5;
+  string class_3 = 6;
+}
+
+message EventCodeMessage {
+  EventCode event_code = 1;
+  string language = 2;
+  string brief = 3;
+  string detail = 4;
+}
+
+message EventError {
+  string code = 1;
+  string solution = 2;
+  string service = 3;
+  string contents = 4;
+}
+
+message GetEventRequest {
+  uint64 event_id = 1;
+}
+
+message GetEventResponse {
+  Event event = 1;
+  Message message = 2;
+}
+
+message GetEventsRequest {
+  uint64 limit = 1;
+  uint64 offset = 2;
+  string solution = 3;
+  string class_1 = 4;
+  string class_2 = 5;
+  string class_3 = 6;
+  string level = 7;
+  int64 start_date = 8;
+  int64 end_date = 9;
+}
+
+message GetEventsResponse {
+  repeated Event events = 1;
+  Pagination pagination = 2;
+  Message message = 3;
+}
+
+message Pagination {
+  uint64 page = 1;
+  uint64 total_page = 2;
+  uint64 total_items = 3;
+}
+
+message GetEventsStreamRequest {
+  google.protobuf.UInt64Value interval = 1;
+  string solution = 2;
+  string class_1 = 3;
+  string class_2 = 4;
+  string class_3 = 5;
+  string level = 6;
+}
+
+message GetEventsStreamResponse {
+  repeated Event events = 1;
+}
+
+message EventClassification {
+  string solution = 1;
+  string class_1 = 2;
+  string class_2 = 3;
+  string class_3 = 4;
+}
+
+message GetEventClassificationsResponse {
+  repeated EventClassification event_classifications = 1;
+  Message message = 2;
+}
+
+message Empty {}
+
+message MessageResponse {
+  Message message = 1;
+}
+
+message EventReceive {
+  string code = 1;
+  google.protobuf.BoolValue enable = 2;
+}
+
+message EventReceivesRequest {
+  repeated EventReceive event_notifications = 1;
+}
+
+message GetEventReceivesRequest {
+  string solution = 1;
+  string class_1 = 2;
+  string class_2 = 3;
+  string class_3 = 4;
+  string level = 5;
+}
+
+message EventReceivesResponse {
+  repeated EventReceive event_notifications = 1;
+  Message message = 2;
+}
+
+message EventSMTPNotifier {
+  string server_address = 1;
+  uint32 server_port = 2;
+  string encryption = 3;
+  string auth_mechanism = 4;
+  string auth_username = 5;
+  string auth_password = 6;
+  string sender = 7;
+}
+
+message EventSMSNotifier {
+  string provider = 1;
+  string version = 2;
+}
+
+message Config {
+  google.protobuf.BoolValue event_notification_enable = 1;
+  google.protobuf.BoolValue event_email_notification_enable = 2;
+  google.protobuf.BoolValue event_desktop_notification_enable = 3;
+  google.protobuf.BoolValue event_popup_notification_enable = 4;
+  google.protobuf.BoolValue event_sms_notification_enable = 5;
+  google.protobuf.BoolValue event_custom_notification_enable = 6;
+  google.protobuf.UInt32Value event_store_period = 7;
+  EventSMTPNotifier event_smtp_notifier = 8;
+  EventSMSNotifier event_sms_notifier = 9;
+}
+
+message SetConfigRequest {
+  Config event_config = 1;
+}
+
+message GetConfigResponse {
+  Config event_config = 1;
+  Message message = 2;
+}
