@@ -8,7 +8,7 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef
 	github.com/casbin/casbin/v2 v2.19.8
 	github.com/casbin/gorm-adapter/v2 v2.1.0
-	github.com/datacommand2/cdm-cloud/common v0.0.0-20231116053807-138bc179eb3f
+	github.com/datacommand2/cdm-cloud/common v0.0.0-20231124062432-069e9eb1c852
 	github.com/golang/protobuf v1.5.2
 	github.com/jinzhu/gorm v1.9.14
 	github.com/micro/go-micro/v2 v2.9.1
