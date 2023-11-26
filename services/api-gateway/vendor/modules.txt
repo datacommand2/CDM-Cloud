@@ -1,65 +1,17 @@
-# github.com/BurntSushi/toml v0.3.1
-github.com/BurntSushi/toml
-# github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible
-github.com/Knetic/govaluate
-# github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef
-github.com/asaskevich/govalidator
-# github.com/casbin/casbin/v2 v2.19.8
-github.com/casbin/casbin/v2/config
-github.com/casbin/casbin/v2/log
-github.com/casbin/casbin/v2/model
-github.com/casbin/casbin/v2/persist
-github.com/casbin/casbin/v2/rbac
-github.com/casbin/casbin/v2/util
-# github.com/casbin/gorm-adapter/v2 v2.1.0
-github.com/casbin/gorm-adapter/v2
-# github.com/cockroachdb/cockroach-go v2.0.1+incompatible
-github.com/cockroachdb/cockroach-go/crdb
-# github.com/coreos/etcd v3.3.22+incompatible
-github.com/coreos/etcd/auth/authpb
-github.com/coreos/etcd/clientv3
-github.com/coreos/etcd/clientv3/balancer
-github.com/coreos/etcd/clientv3/balancer/connectivity
-github.com/coreos/etcd/clientv3/balancer/picker
-github.com/coreos/etcd/clientv3/balancer/resolver/endpoint
-github.com/coreos/etcd/clientv3/credentials
-github.com/coreos/etcd/etcdserver/api/v3rpc/rpctypes
-github.com/coreos/etcd/etcdserver/etcdserverpb
-github.com/coreos/etcd/mvcc/mvccpb
-github.com/coreos/etcd/pkg/logutil
-github.com/coreos/etcd/pkg/systemd
-github.com/coreos/etcd/pkg/types
-github.com/coreos/etcd/raft
-github.com/coreos/etcd/raft/raftpb
-github.com/coreos/etcd/version
-# github.com/coreos/go-semver v0.3.0
-github.com/coreos/go-semver/semver
-# github.com/coreos/go-systemd v0.0.0-20190719114852-fd7a80b32e1f
-github.com/coreos/go-systemd/journal
-# github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f
-github.com/coreos/pkg/capnslog
-# github.com/datacommand2/cdm-cloud/common v0.0.0-20231116045224-15deb31e11c1
+# github.com/datacommand2/cdm-cloud/common v0.0.0-20231124062432-069e9eb1c852
 ## explicit
-github.com/datacommand2/cdm-cloud/common/config
+github.com/datacommand2/cdm-cloud/common/broker
 github.com/datacommand2/cdm-cloud/common/constant
-github.com/datacommand2/cdm-cloud/common/database
 github.com/datacommand2/cdm-cloud/common/database/model
 github.com/datacommand2/cdm-cloud/common/errors
 github.com/datacommand2/cdm-cloud/common/event
 github.com/datacommand2/cdm-cloud/common/logger
 github.com/datacommand2/cdm-cloud/common/metadata
-github.com/datacommand2/cdm-cloud/common/store
-github.com/datacommand2/cdm-cloud/common/util
-# github.com/datacommand2/cdm-cloud/services/identity v0.0.0-20231116045224-15deb31e11c1
+# github.com/datacommand2/cdm-cloud/services/identity v0.0.0-20231124065504-a141af3cd63a
 ## explicit
-github.com/datacommand2/cdm-cloud/services/identity/handler
 github.com/datacommand2/cdm-cloud/services/identity/proto
-# github.com/davecgh/go-spew v1.1.1
-github.com/davecgh/go-spew/spew
 # github.com/evanphx/json-patch/v5 v5.0.0
 github.com/evanphx/json-patch/v5
-# github.com/go-sql-driver/mysql v1.5.0
-github.com/go-sql-driver/mysql
 # github.com/gobwas/httphead v0.0.0-20180130184737-2c6c146eadee
 github.com/gobwas/httphead
 # github.com/gobwas/pool v0.2.0
@@ -71,10 +23,6 @@ github.com/gobwas/pool/pbytes
 ## explicit
 github.com/gobwas/ws
 github.com/gobwas/ws/wsutil
-# github.com/gogo/protobuf v1.2.1
-github.com/gogo/protobuf/gogoproto
-github.com/gogo/protobuf/proto
-github.com/gogo/protobuf/protoc-gen-gogo/descriptor
 # github.com/golang/protobuf v1.5.2
 ## explicit
 github.com/golang/protobuf/jsonpb
@@ -85,16 +33,11 @@ github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
 github.com/golang/protobuf/ptypes/wrappers
 # github.com/google/uuid v1.3.0
-## explicit
 github.com/google/uuid
-# github.com/gorilla/websocket v1.4.1
-## explicit
-github.com/gorilla/websocket
 # github.com/jinzhu/copier v0.0.0-20190924061706-b57f9002281a
 github.com/jinzhu/copier
 # github.com/jinzhu/gorm v1.9.14
 github.com/jinzhu/gorm
-github.com/jinzhu/gorm/dialects/mysql
 # github.com/jinzhu/inflection v1.0.0
 github.com/jinzhu/inflection
 # github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
@@ -103,10 +46,6 @@ github.com/lestrrat-go/file-rotatelogs/internal/option
 # github.com/lestrrat-go/strftime v1.0.6
 github.com/lestrrat-go/strftime
 github.com/lestrrat-go/strftime/internal/errors
-# github.com/lib/pq v1.3.0
-github.com/lib/pq
-github.com/lib/pq/oid
-github.com/lib/pq/scram
 # github.com/micro/go-micro/v2 v2.9.1
 ## explicit
 github.com/micro/go-micro/v2/api
@@ -140,14 +79,12 @@ github.com/micro/go-micro/v2/metadata
 github.com/micro/go-micro/v2/registry
 github.com/micro/go-micro/v2/registry/cache
 github.com/micro/go-micro/v2/server
-github.com/micro/go-micro/v2/server/grpc
 github.com/micro/go-micro/v2/store
 github.com/micro/go-micro/v2/transport
 github.com/micro/go-micro/v2/util/addr
 github.com/micro/go-micro/v2/util/backoff
 github.com/micro/go-micro/v2/util/buf
 github.com/micro/go-micro/v2/util/ctx
-github.com/micro/go-micro/v2/util/grpc
 github.com/micro/go-micro/v2/util/mdns
 github.com/micro/go-micro/v2/util/net
 github.com/micro/go-micro/v2/util/pool
@@ -157,7 +94,7 @@ github.com/micro/go-micro/v2/util/ring
 github.com/micro/go-micro/v2/util/signal
 github.com/micro/go-micro/v2/util/socket
 github.com/micro/go-micro/v2/util/tls
-# github.com/miekg/dns v1.1.27
+# github.com/miekg/dns v1.1.43
 github.com/miekg/dns
 # github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c
 github.com/oxtoacart/bpool
@@ -165,35 +102,9 @@ github.com/oxtoacart/bpool
 github.com/patrickmn/go-cache
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
-# github.com/pmezard/go-difflib v1.0.0
-github.com/pmezard/go-difflib/difflib
-# github.com/sethvargo/go-password v0.2.0
-github.com/sethvargo/go-password/password
-# github.com/stretchr/testify v1.7.0
-## explicit
-github.com/stretchr/testify/assert
-# go.uber.org/atomic v1.5.0
-go.uber.org/atomic
-# go.uber.org/multierr v1.3.0
-go.uber.org/multierr
-# go.uber.org/tools v0.0.0-20190618225709-2cfd321de3ee
-go.uber.org/tools/update-license
-# go.uber.org/zap v1.13.0
-go.uber.org/zap
-go.uber.org/zap/buffer
-go.uber.org/zap/internal/bufferpool
-go.uber.org/zap/internal/color
-go.uber.org/zap/internal/exit
-go.uber.org/zap/zapcore
-# golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37
-golang.org/x/crypto/ed25519
-golang.org/x/crypto/ed25519/internal/edwards25519
-# golang.org/x/lint v0.0.0-20210508222113-6edffad5e616
-golang.org/x/lint
-golang.org/x/lint/golint
-# golang.org/x/mod v0.4.2
-golang.org/x/mod/semver
-# golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
+# github.com/streadway/amqp v1.0.0
+github.com/streadway/amqp
+# golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 golang.org/x/net/bpf
 golang.org/x/net/http/httpguts
 golang.org/x/net/http2
@@ -205,47 +116,21 @@ golang.org/x/net/internal/socket
 golang.org/x/net/internal/timeseries
 golang.org/x/net/ipv4
 golang.org/x/net/ipv6
-golang.org/x/net/netutil
 golang.org/x/net/trace
-# golang.org/x/sys v0.0.0-20210510120138-977fb7262007
-golang.org/x/sys/execabs
+# golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/text v0.3.5
+# golang.org/x/text v0.3.6
 golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
-# golang.org/x/tools v0.1.2
-golang.org/x/tools/go/analysis
-golang.org/x/tools/go/analysis/passes/inspect
-golang.org/x/tools/go/ast/astutil
-golang.org/x/tools/go/ast/inspector
-golang.org/x/tools/go/buildutil
-golang.org/x/tools/go/gcexportdata
-golang.org/x/tools/go/internal/gcimporter
-golang.org/x/tools/go/internal/packagesdriver
-golang.org/x/tools/go/packages
-golang.org/x/tools/go/types/objectpath
-golang.org/x/tools/go/types/typeutil
-golang.org/x/tools/internal/analysisinternal
-golang.org/x/tools/internal/event
-golang.org/x/tools/internal/event/core
-golang.org/x/tools/internal/event/keys
-golang.org/x/tools/internal/event/label
-golang.org/x/tools/internal/gocommand
-golang.org/x/tools/internal/lsp/fuzzy
-golang.org/x/tools/internal/packagesinternal
-golang.org/x/tools/internal/typesinternal
-# golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
-golang.org/x/xerrors
-golang.org/x/xerrors/internal
 # google.golang.org/genproto v0.0.0-20210602131652-f16073e35f0c
 ## explicit
 google.golang.org/genproto/googleapis/api/annotations
 google.golang.org/genproto/googleapis/rpc/status
-# google.golang.org/grpc v1.38.0 => google.golang.org/grpc v1.26.0
+# google.golang.org/grpc v1.44.0 => google.golang.org/grpc v1.26.0
 google.golang.org/grpc
 google.golang.org/grpc/attributes
 google.golang.org/grpc/backoff
@@ -278,8 +163,6 @@ google.golang.org/grpc/metadata
 google.golang.org/grpc/naming
 google.golang.org/grpc/peer
 google.golang.org/grpc/resolver
-google.golang.org/grpc/resolver/dns
-google.golang.org/grpc/resolver/passthrough
 google.golang.org/grpc/serviceconfig
 google.golang.org/grpc/stats
 google.golang.org/grpc/status
@@ -319,32 +202,4 @@ google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/timestamppb
 google.golang.org/protobuf/types/known/wrapperspb
-# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
-gopkg.in/yaml.v3
-# honnef.co/go/tools v0.0.1-2019.2.3
-honnef.co/go/tools/arg
-honnef.co/go/tools/cmd/staticcheck
-honnef.co/go/tools/config
-honnef.co/go/tools/deprecated
-honnef.co/go/tools/facts
-honnef.co/go/tools/functions
-honnef.co/go/tools/go/types/typeutil
-honnef.co/go/tools/internal/cache
-honnef.co/go/tools/internal/passes/buildssa
-honnef.co/go/tools/internal/renameio
-honnef.co/go/tools/internal/sharedcheck
-honnef.co/go/tools/lint
-honnef.co/go/tools/lint/lintdsl
-honnef.co/go/tools/lint/lintutil
-honnef.co/go/tools/lint/lintutil/format
-honnef.co/go/tools/loader
-honnef.co/go/tools/printf
-honnef.co/go/tools/simple
-honnef.co/go/tools/ssa
-honnef.co/go/tools/ssautil
-honnef.co/go/tools/staticcheck
-honnef.co/go/tools/staticcheck/vrp
-honnef.co/go/tools/stylecheck
-honnef.co/go/tools/unused
-honnef.co/go/tools/version
 # google.golang.org/grpc => google.golang.org/grpc v1.26.0
