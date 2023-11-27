@@ -1,4 +1,4 @@
-# github.com/datacommand2/cdm-cloud/common v0.0.0-20231124062432-069e9eb1c852
+# github.com/datacommand2/cdm-cloud/common v0.0.0-20231127061122-07e02be5bd0c
 ## explicit
 github.com/datacommand2/cdm-cloud/common/broker
 github.com/datacommand2/cdm-cloud/common/constant
@@ -7,7 +7,7 @@ github.com/datacommand2/cdm-cloud/common/errors
 github.com/datacommand2/cdm-cloud/common/event
 github.com/datacommand2/cdm-cloud/common/logger
 github.com/datacommand2/cdm-cloud/common/metadata
-# github.com/datacommand2/cdm-cloud/services/identity v0.0.0-20231124065504-a141af3cd63a
+# github.com/datacommand2/cdm-cloud/services/identity v0.0.0-20231127061639-e680b139acd3
 ## explicit
 github.com/datacommand2/cdm-cloud/services/identity/proto
 # github.com/evanphx/json-patch/v5 v5.0.0
@@ -94,7 +94,7 @@ github.com/micro/go-micro/v2/util/ring
 github.com/micro/go-micro/v2/util/signal
 github.com/micro/go-micro/v2/util/socket
 github.com/micro/go-micro/v2/util/tls
-# github.com/miekg/dns v1.1.43
+# github.com/miekg/dns v1.1.27
 github.com/miekg/dns
 # github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c
 github.com/oxtoacart/bpool
@@ -104,7 +104,10 @@ github.com/patrickmn/go-cache
 github.com/pkg/errors
 # github.com/streadway/amqp v1.0.0
 github.com/streadway/amqp
-# golang.org/x/net v0.0.0-20210525063256-abc453219eb5
+# golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37
+golang.org/x/crypto/ed25519
+golang.org/x/crypto/ed25519/internal/edwards25519
+# golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 golang.org/x/net/bpf
 golang.org/x/net/http/httpguts
 golang.org/x/net/http2
@@ -117,11 +120,11 @@ golang.org/x/net/internal/timeseries
 golang.org/x/net/ipv4
 golang.org/x/net/ipv6
 golang.org/x/net/trace
-# golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c
+# golang.org/x/sys v0.0.0-20210510120138-977fb7262007
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/text v0.3.6
+# golang.org/x/text v0.3.5
 golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
