@@ -2,8 +2,10 @@ package helper
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/datacommand2/cdm-cloud/common/database/model"
 	meta "github.com/datacommand2/cdm-cloud/common/metadata"
+	identity "github.com/datacommand2/cdm-cloud/services/identity/proto"
 
 	"github.com/jinzhu/gorm"
 	"github.com/micro/go-micro/v2/metadata"
@@ -20,13 +22,13 @@ func WithAuthenticatedSession(key string) ContextOption {
 	}
 }
 
-////WithAuthenticatedUser context 에 AuthenticatedUser metadata 추가
-//func WithAuthenticatedUser(user *identity.User) ContextOption {
-//	return func(ctx context.Context) context.Context {
-//		b, _ := json.Marshal(user)
-//		return metadata.Set(ctx, meta.HeaderAuthenticatedUser, string(b))
-//	}
-//}
+// WithAuthenticatedUser context 에 AuthenticatedUser metadata 추가
+func WithAuthenticatedUser(user *identity.User) ContextOption {
+	return func(ctx context.Context) context.Context {
+		b, _ := json.Marshal(user)
+		return metadata.Set(ctx, meta.HeaderAuthenticatedUser, string(b))
+	}
+}
 
 // WithClientIP context 에 ClientIP metadata 추가
 func WithClientIP(ip string) ContextOption {
