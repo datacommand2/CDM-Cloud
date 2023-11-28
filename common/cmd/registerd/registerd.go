@@ -1,17 +1,19 @@
 package main
 
 import (
+	"10.1.1.220/cdm/cdm-cloud/common/errors"
 	"10.1.1.220/cdm/cdm-cloud/common/logger"
 	"fmt"
-	"github.com/go-micro/plugins/v4/registry/kubernetes"
 	"github.com/google/uuid"
-	"go-micro.dev/v4"
-	"go-micro.dev/v4/auth"
-	"go-micro.dev/v4/server"
+	"github.com/micro/go-micro/v2"
+	"github.com/micro/go-micro/v2/auth"
+	"github.com/micro/go-micro/v2/config/cmd"
+	"github.com/micro/go-micro/v2/registry"
+	"github.com/micro/go-micro/v2/server"
 	"os"
 	"strings"
 
-	_ "github.com/go-micro/plugins/v4/registry/kubernetes"
+	_ "github.com/go-micro/plugins/v2/registry/kubernetes"
 )
 
 // OsExiter is the function used when the app exits. If not set defaults to os.Exit.
@@ -27,11 +29,19 @@ type Service struct {
 
 // Register 는 service registry 에 서비스를 등록하는 함수이다.
 func (s Service) Register() error {
+	if registryName := s.Metadata["MICRO_REGISTRY"]; registryName != "" {
+		fc, ok := cmd.DefaultRegistries[registryName]
+		if !ok {
+			return errors.New("invalid registry name")
+		}
+
+		registry.DefaultRegistry = fc()
+	}
+
 	srv := server.NewServer(
 		server.Id(uuid.New().String()),
 		server.Advertise(fmt.Sprintf(":%s", s.AdvertisePort)),
 		server.Metadata(s.Metadata),
-		server.Registry(kubernetes.NewRegistry()),
 	)
 
 	return micro.NewService(
@@ -73,6 +83,7 @@ func main() {
 	md := parseMetadata(getEnv("CDM_SERVICE_METADATA", false))
 	md["CDM_SOLUTION_NAME"] = getEnv("CDM_SOLUTION_NAME", true)
 	md["CDM_SERVICE_DESCRIPTION"] = getEnv("CDM_SERVICE_DESCRIPTION", true)
+	md["MICRO_REGISTRY"] = getEnv("MICRO_REGISTRY", false)
 
 	s := Service{
 		Name:          getEnv("CDM_SERVICE_NAME", true),

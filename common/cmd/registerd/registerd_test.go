@@ -1,12 +1,10 @@
-//go:build kubernetes_registry
-// +build kubernetes_registry
+//+build kubernetes_registry
 
 package main
 
 import (
+	"github.com/micro/go-micro/v2/registry"
 	"github.com/stretchr/testify/assert"
-	"go-micro.dev/v4/registry"
-
 	"os"
 	"testing"
 	"time"
