@@ -1,0 +1,245 @@
+GlobalConfig:
+  get:
+    summary: 서비스 전역 설정 조회
+    description: CDM 모니터 서비스 전역 설정을 조회한다.
+    operationId: cdm.cloud.monitor.get.global.config
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-05081
+    tags:
+      - monitor
+    responses:
+      200:
+        $ref: '#/components/responses/GlobalConfig'
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  put:
+    summary: 서비스 전역 설정 변경
+    description: CDM 모니터 서비스 전역 설정을 변경한다.
+    operationId: cdm.cloud.monitor.set.global.config
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-05091
+    tags:
+      - monitor
+    requestBody:
+      $ref: '#/components/requestBodies/GlobalConfig'
+    responses:
+      200:
+        $ref: '#/components/responses/GlobalConfig'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+ServiceConfigs:
+  get:
+    summary: 서비스 설정 조회
+    description: 현재 실행중인 모든 CDM 서비스의 모니터 서비스 설정을 조회한다.
+    operationId: cdm.cloud.monitor.get.service.configs
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-05061
+    tags:
+      - monitor
+    responses:
+      200:
+        $ref: '#/components/responses/ServiceConfigs'
+      204:
+        description: No Contents
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  put:
+    summary: 서비스 설정 변경
+    description: 현재 실행중인 모든 CDM 서비스의 모니터 서비스 설정을 변경한다.
+    operationId: cdm.cloud.monitor.set.service.configs
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-05071
+    tags:
+      - monitor
+    requestBody:
+      $ref: '#/components/requestBodies/ServiceConfigs'
+    responses:
+      200:
+        $ref: '#/components/responses/ServiceConfigs'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+components:
+  requestBodies:
+    GlobalConfig:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              global_config:
+                $ref: '#/components/schemas/GlobalConfig'
+          example: {
+            global_config: {
+              global_log_level: "info",
+              global_log_store_period: 0,
+              system_monitor_interval: 5
+            }
+          }
+
+    ServiceConfigs:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              service_configs:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceConfig'
+          example: {
+            service_configs: [
+              {
+                name: "cdm-cloud-identity",
+                log_level: "debug",
+                log_store_period: 3
+              },
+              {
+                name: "cdm-cloud-etcd",
+                log_level: "trace",
+                log_store_period: 5
+              },
+              {
+                name: "cdm-cloud-monitor"
+              }
+            ]
+          }
+
+  responses:
+    GlobalConfig:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              global_config:
+                $ref: '#/components/schemas/GlobalConfig'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            global_config: {
+              global_log_level: "info",
+              global_log_store_period: 0,
+              system_monitor_interval: 5,
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    ServiceConfigs:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              service_configs:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceConfig'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            service_configs: [
+              {
+                name: "cdm-cloud-identity",
+                log_level: "debug",
+                log_store_period: 3
+              },
+              {
+                name: "cdm-cloud-etcd",
+                log_level: "trace",
+                log_store_period: 5
+              },
+              {
+                name: "cdm-cloud-monitor"
+              }
+            ],
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+  schemas:
+    GlobalConfig:
+      description: 모니터 서비스 전역 설정
+      type: object
+      properties:
+        global_log_level:
+          description: "로그 레벨 기본값"
+          type: string
+          enum: ["trace", "debug", "info", "warning", "error"]
+          default: "info"
+        global_log_store_period:
+          description: "로그 보유기간 기본값 (month, 0: unlimited)"
+          type: integer
+          format: int32
+          default: 0
+          minimum: 3
+          maximum: 120
+        system_monitor_interval:
+          description: "WebSocket 프로토콜을 사용할 때의 데이터 수신 간격 기본값 (sec)"
+          type: integer
+          format: int32
+          default: 5
+          minimum: 2
+          maximum: 30
+
+    ServiceConfig:
+      description: 특정 서비스의 모니터 서비스 설정
+      type: object
+      properties:
+        name:
+          description: 서비스의 이름
+          type: string
+        log_level:
+          description: "서비스 로그 레벨"
+          type: string
+          enum: ["trace", "debug", "info", "warning", "error"]
+        log_store_period:
+          description: "서비스 로그 보유기간 (month, 0: unlimited)"
+          type: integer
+          format: int32
+          minimum: 3
+          maximum: 120

@@ -1,0 +1,110 @@
+Config:
+  get:
+    summary: 사용자 인증 설정 조회
+    description: 설명추가
+    operationId: cdm.cloud.get.identity.config
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06161
+    tags:
+      - identity
+    responses:
+      200:
+        $ref: '#/components/responses/IdentityConfig'
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  put:
+    summary: 사용자 인증 설정 변경
+    description: 설명추가
+    operationId: cdm.cloud.set.identity.config
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06171
+    tags:
+      - identity
+    requestBody:
+      $ref: '#/components/requestBodies/IdentityConfig'
+    responses:
+      200:
+        $ref: '#/components/responses/IdentityConfig'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      409:
+        description: Conflict
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+components:
+  parameters:
+    ServiceName:
+      in: path
+      name: service_name
+      description: 서비스 이름
+      required: true
+      schema:
+        type: string
+
+  requestBodies:
+    IdentityConfig:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              identity_config:
+                $ref: 'schemas.yaml#/Config/Identity'
+          example: {
+            identity_config: {
+              user_login_restriction_enable: true,
+              user_login_restriction_try_count: 5,
+              user_login_restriction_time: 30,
+              user_reuse_old_password: true,
+              user_password_change_cycle: 90,
+              user_session_timeout: 30,
+              global_timezone: "UTC",
+              global_language_set: "eng"
+            }
+          }
+
+  responses:
+    IdentityConfig:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              identity_config:
+                $ref: 'schemas.yaml#/Config/Identity'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            identity_config: {
+              user_login_restriction_enable: true,
+              user_login_restriction_try_count: 5,
+              user_login_restriction_time: 30,
+              user_reuse_old_password: true,
+              user_password_change_cycle: 90,
+              user_session_timeout: 30,
+              global_timezone: "UTC",
+              global_language_set: "eng"
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }

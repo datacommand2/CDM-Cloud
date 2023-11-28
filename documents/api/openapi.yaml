@@ -1,0 +1,113 @@
+openapi: "3.0.0"
+info:
+  version: v1
+  title: CDM-Cloud
+  description: 설명추가
+
+tags:
+- name: license
+  description: 설명추가
+- name: tenant
+  description: 설명추가
+- name: identity
+  description: 설명추가
+- name: notification
+  description: 설명추가
+- name: backup
+  description: 설명추가
+- name: monitor
+  description: CDM-Cloud 모니터 서비스
+- name: config
+  description: 설명추가
+
+paths:
+  /license/product-uuid:
+    $ref: 'license.yaml#/ProductUUID'
+  /license:
+    $ref: 'license.yaml#/License'
+  /license/check:
+    $ref: 'license.yaml#/Check'
+
+  /tenants:
+    $ref: 'identity_tenants.yaml#/Resource'
+  /tenants/{tenant_id}:
+    $ref: 'identity_tenants.yaml#/Object'
+  /tenants/{tenant_id}/activate:
+    $ref: 'identity_tenants.yaml#/Object/Activate'
+  /tenants/{tenant_id}/deactivate:
+    $ref: 'identity_tenants.yaml#/Object/Deactivate'
+
+  /identity/groups:
+    $ref: 'identity_user_groups.yaml#/Resource'
+  /identity/groups/{group_id}:
+    $ref: 'identity_user_groups.yaml#/Object'
+  /identity/groups/{group_id}/users:
+    $ref: 'identity_user_groups.yaml#/Object/Users'
+  /identity/roles:
+    $ref: 'identity_roles.yaml#/Resource'
+  /identity/users:
+    $ref: 'identity_users.yaml#/Resource'
+  /identity/users/{user_id}:
+    $ref: 'identity_users.yaml#/Object'
+  /identity/users/{user_id}/password:
+    $ref: 'identity_users.yaml#/Password'
+  /identity/users/{user_id}/password-reset:
+    $ref: 'identity_users.yaml#/PasswordReset'
+  /identity/auth:
+    $ref: 'identity_sessions.yaml#/Auth'
+  /identity/sessions:
+    $ref: 'identity_sessions.yaml#/Session'
+  /identity/sessions/check:
+    $ref: 'identity_sessions.yaml#/Session/Check'
+  /identity/sessions/{session_key}:
+    $ref: 'identity_sessions.yaml#/Session/Revoke'
+  /identity/config:
+    $ref: 'identity_config.yaml#/Config'
+
+  /notification/events:
+    $ref: 'notification_events.yaml#/Resource'
+  /notification/monitor:
+    $ref: 'notification_events.yaml#/WebSocket'
+  /notification/event-classifications:
+    $ref: 'notification_events.yaml#/Classification'
+  /notification/events/{event_id}:
+    $ref: 'notification_events.yaml#/Object'
+  /notification/config/receivers/tenant:
+    $ref: 'notification.yaml#/Receiver/Tenant'
+  /notification/config/receivers/user:
+    $ref: 'notification.yaml#/Receiver/User'
+  /notification/config/receivers/user-reset:
+    $ref: 'notification.yaml#/Receiver/UserReset'
+  /notification/config:
+    $ref: 'notification.yaml#/Config'
+
+  /backup/backups:
+    $ref: 'backup.yaml#/Resource'
+  /backup/backups/{backup_id}:
+    $ref: 'backup.yaml#/Object'
+  /backup/backups/{backup_id}/restore:
+    $ref: 'backup.yaml#/Restore'
+  /backup/reservations:
+    $ref: 'backup.yaml#/Reservation/Resource'
+  /backup/reservations/{schedule_id}:
+    $ref: 'backup.yaml#/Reservation/Object'
+
+  /monitor/nodes:
+    $ref: 'monitor_nodes.yaml#/Resource'
+  /monitor/nodes/{node_id}:
+    $ref: 'monitor_nodes.yaml#/Object'
+  /monitor/nodes/{node_id}/services:
+    $ref: 'monitor_nodes.yaml#/Services'
+  /monitor/services:
+    $ref: 'monitor_services.yaml#/Resource'
+  /monitor/services/{service_name}:
+    $ref: 'monitor_services.yaml#/Object'
+  /monitor/services/{service_name}/logs/{log_date}:
+    $ref: 'monitor_services.yaml#/Logs'
+  /monitor/config:
+    $ref: 'monitor_config.yaml#/GlobalConfig'
+  /monitor/config/services:
+    $ref: 'monitor_config.yaml#/ServiceConfigs'
+
+  /config/backup:
+    $ref: 'config.yaml#/Backup'

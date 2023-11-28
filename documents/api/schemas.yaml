@@ -1,0 +1,796 @@
+Message:
+  description: 메세지
+  type: object
+  properties:
+    code:
+      description: 메세지 코드
+      type: string
+    contents:
+      description: 메세지 코드 상세 내용
+      type: string
+
+License:
+  description: License 정보
+  type: object
+  properties:
+    cdm_cloud_license_key:
+      description: 라이선스 키
+      type: string
+    cdm_cloud_provider:
+      description: 제공자
+      type: string
+    cdm_cloud_customer:
+      description: 고객사
+      type: string
+    cdm_dr_issue_dt:
+      description: 라이선스 발급한 일자
+      type: integer
+      format: int64
+    cdm_dr_expiry_dt:
+      description: 라이선스가 만료되는 일자
+      type: integer
+      format: int64
+    cdm_dr_limits_platform:
+      description: 사용가능한 플랫폼 목록
+      type: array
+      items:
+        type: string
+        enum: ["openstack", "openshift", "kubernetes", "vmware"]
+    cdm_dr_limits_storage:
+      description: 사용가능한 스토리지 목록
+      type: array
+      items:
+        type: string
+        enum: ["lvm", "nfs", "ceph", "netapp"]
+    cdm_dr_limits_cluster:
+      description: 클러스텨 갯수 제한
+      type: integer
+    cdm_dr_limits_tenant:
+      description: 테넌트 갯수 제한
+      type: integer
+    cdm_dr_limits_instance:
+      description: 인스턴스 갯수 제한
+      type: integer
+    cdm_dr_limits_volume:
+      description: 볼륨 갯수 제한
+      type: integer
+    cdm_r_issue_dt:
+      description: 라이선스 발급한 일자
+      type: integer
+      format: int64
+    cdm_r_expiry_dt:
+      description: 라이선스가 만료되는 일자
+      type: integer
+      format: int64
+    cdm_r_limits_agent:
+      description: 에이전트 최대등록수 및 최대동시연결수
+      type: integer
+    cdm_r_limits_group:
+      description: 그룹 최대등록수
+      type: integer
+
+Node:
+  description: 노드
+  type: object
+  properties:
+    id:
+      description: 노드의 ID
+      type: string
+    name:
+      description: 노드의 이름
+      type: string
+
+NodeStatus:
+  description: 노드의 상태
+  properties:
+    resource_usage:
+      $ref: 'schemas.yaml#/NodeResourceUsage'
+
+NodeResourceUsage:
+  description: 노드의 시스템 리소스 사용량
+  type: object
+  properties:
+    cpu_core_cnt:
+      description: CPU Core 갯수
+      type: integer
+      format: int32
+    cpu_used_rate:
+      description: CPU 사용률
+      type: number
+      format: float
+    mem_total_bytes:
+      description: 메모리 용량
+      type: integer
+      format: int64
+    mem_used_bytes:
+      description: 메모리 사용량
+      type: integer
+      format: int64
+    network_receive_bytes:
+      description: 네트워크 Input 사용량
+      type: integer
+      format: int64
+    network_transmit_bytes:
+      description: 네트워크 Output 사용량
+      type: integer
+      format: int64
+    filesystem_size_bytes:
+      description: 스토리지 용량
+      type: integer
+      format: int64
+    filesystem_used_bytes:
+      description: 스토리지 사용량
+      type: integer
+      format: int64
+
+Service:
+  description: 서비스
+  type: object
+  properties:
+    name:
+      description: 서비스의 이름
+      type: string
+    solution:
+      description: 솔루션 이름
+      type: string
+    description:
+      description: 서비스 설명
+      type: string
+    version:
+      description: 서비스의 버전
+      type: string
+
+ServiceStatus:
+  description: 서비스의 상태
+  properties:
+    resource_usage:
+      $ref: 'schemas.yaml#/ServiceResourceUsage'
+
+ServiceReplica:
+  description: 서비스 레플리카
+  type: object
+  properties:
+    id:
+      description: 레플리카의 ID
+      type: string
+    node:
+      $ref: 'schemas.yaml#/Node'
+    status:
+      $ref: 'schemas.yaml#/ServiceReplicaStatus'
+
+ServiceReplicaStatus:
+  description: 서비스 레플리카의 상태
+  properties:
+    resource_usage:
+      $ref: 'schemas.yaml#/ServiceResourceUsage'
+
+ServiceResourceUsage:
+  description: 서비스의 시스템 리소스 사용량
+  type: object
+  properties:
+    mem_used_bytes:
+      description: 메모리 사용량
+      type: integer
+      format: int64
+    network_receive_bytes:
+      description: 네트워크 Input 사용량
+      type: integer
+      format: int64
+    network_transmit_bytes:
+      description: 네트워크 Output 사용량
+      type: integer
+      format: int64
+
+TenantSolution:
+  description: 테넌트
+  type: object
+  properties:
+    name:
+      description: 솔루션 이름
+      type: string
+
+Tenant:
+  description: 테넌트
+  type: object
+  properties:
+    id:
+      description: 테넌트 ID
+      type: integer
+      format: int64
+    name:
+      description: 테넌트 이름
+      type: string
+    use_flag:
+      description: 사용여부
+      type: boolean
+    solutions:
+      description: 테넌트가 사용할 수 있는 솔루션 목록
+      type: array
+      items:
+        $ref: 'schemas.yaml#/TenantSolution'
+    remarks:
+      description: 비고
+      type: string
+    created_at:
+      description: 테넌트 생성 날짜
+      type: integer
+      format: int64
+    updated_at:
+      description: 테넌트 변경 날짜
+      type: integer
+      format: int64
+
+Role:
+  description: 솔루션 역할
+  type: object
+  properties:
+    id:
+      description: 솔루션 역할의 ID
+      type: integer
+      format: int64
+    solution:
+      description: 솔루션 이름
+      type: string
+    role:
+      description: 역할
+      type: string
+      enum: ["manager", "operator", "viewer"]
+
+UserGroup:
+  description: 사용자 그룹
+  type: object
+  properties:
+    id:
+      description: 사용자 그룹 ID
+      type: integer
+      format: int64
+    tenant:
+      $ref: 'schemas.yaml#/Tenant'
+    name:
+      description: 사용자 그룹 이름
+      type: string
+    remarks:
+      description: 비고
+      type: string
+    created_at:
+      description: 사용자 그룹 생성 날짜
+      type: integer
+      format: int64
+    updated_at:
+      description: 사용자 그룹 변경 날짜
+      type: integer
+      format: int64
+
+User:
+  description: 사용자
+  type: object
+  properties:
+    id:
+      description: 사용자 ID
+      type: integer
+      format: int64
+    account:
+      decription: 계정 명
+      type: string
+    tenant:
+      $ref: 'schemas.yaml#/Tenant'
+    roles:
+      description: 솔루션별 역할
+      type: array
+      items:
+        $ref: 'schemas.yaml#/Role'
+    groups:
+      description: 사용자 그룹 목록
+      type: array
+      items:
+        $ref: 'schemas.yaml#/UserGroup'
+    timezone:
+      description: 사용자 타임존 ([참조링크](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
+      type: string
+    language_set:
+      description: 사용자 언어셋 ([참조링크](https://en.wikipedia.org/wiki/ISO_639-3))
+      type: string
+      enum: ["eng", "kor"]
+    name:
+      description: 사용자 이름
+      type: string
+    department:
+      description: 사용자 부서
+      type: string
+    position:
+      description: 사용자 직책
+      type: string
+    email:
+      description: 사용자 이메일
+      type: string
+    contact:
+      description: 사용자 연락처
+      type: string
+    password_updated_at:
+      description: 계정 암호 변경 날짜
+      type: integer
+      format: int64
+    password_update_flag:
+      description: 계정 암호 변경 필요 여부
+      type: boolean
+    last_logged_in_at:
+      description: 계정 마지막 로그인 날짜
+      type: integer
+      format: int64
+    created_at:
+      description: 계정 생성 날짜
+      type: integer
+      format: int64
+    updated_at:
+      description: 계정 내용 변경 날짜
+      type: integer
+      format: int64
+    session:
+      $ref: 'schemas.yaml#/Session'
+
+Session:
+  description: 사용자 세션
+  type: object
+  properties:
+    key:
+      description: 세션 키
+      type: string
+
+Schedule:
+  description: 스케쥴
+  type: object
+  properties:
+    id:
+      description: 스케쥴 ID
+      type: integer
+    topic:
+      description: 메시지 Topic
+      type: string
+    message:
+      description: 메시지
+      type: string
+    type:
+      description: 주기 종류
+      type: string
+      enum: ["specific", "minutely", "hourly", "daily", "weekly", "day-of-monthly", "week-of-monthly"]
+    start-year:
+      description: 시작년도
+      type: integer
+      minimum: 1900
+      maximum: 9999
+    start-month:
+      description: 시작월
+      type: integer
+      minimum: 1
+      maximum: 12
+    start-day:
+      description: 시작일
+      type: integer
+      minimum: 1
+      maximum: 31
+    interval-minute:
+      description: 주기간격 (분)
+      type: integer
+      enum: [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30]
+    interval-hour:
+      description: 주기간격 (시간)
+      type: integer
+      enum: [1, 2, 3, 4, 6, 12]
+    interval-day:
+      description: 주기간격 (일)
+      type: integer
+      minimum: 1
+      maximum: 15
+    interval-week:
+      description: 주기간격 (주)
+      type: integer
+      minimum: 1
+      maximum: 4
+    interval-month:
+      description: 주기간격 (개월)
+      type: integer
+      enum: [1, 2, 3, 4, 6, 12]
+    week-of-month:
+      description: 주차
+      type: string
+      enum: ["first-week", "second-week", "third-week", "fourth-week", "fifth-week", "last-week"]
+    day-of-month:
+      description: 일자(1-31, last-day)
+      type: string
+    day-of-week:
+      description: 요일
+      type: string
+      enum: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+    hour:
+      description: 시
+      type: integer
+      minimum: 0
+      maximum: 23
+    minute:
+      description: 분
+      type: integer
+      minimum: 0
+      maximum: 59
+
+EventClassification:
+  type: object
+  properties:
+    solution:
+      description: 솔루션 이름
+      type: string
+    class_1:
+      description: 이벤트 대분류
+      type: string
+    class_2:
+      description: 이벤트 중분류
+      type: string
+    class_3:
+      description: 이벤트 소분류
+      type: string
+
+Event:
+  description: 이벤트
+  type: object
+  properties:
+    id:
+      description: 이벤트 ID
+      type: integer
+    tenant:
+      $ref: 'schemas.yaml#/Tenant'
+    code:
+      description: 이벤트 코드
+      type: string
+    error_code:
+      description: 이벤트 에러 코드
+      type: string
+    contents:
+      description: 이벤트 상세내용 데이터 (JSON)
+      type: string
+    created_at:
+      description: 이벤트 발생일시
+      type: integer
+      format: int64
+
+EventCode:
+  description: 이벤트 코드
+  type: object
+  properties:
+    code:
+      description: 이벤트 코드 (메시지 코드)
+      type: string
+    solution:
+      description: 솔루션 이름
+      type: string
+    level:
+      description: 이벤트 레벨
+      type: string
+      enum: [ "trace", "info", "warn", "error", "fatal" ]
+    class_1:
+      description: 이벤트 대분류
+      type: string
+    class_2:
+      description: 이벤트 중분류
+      type: string
+    class_3:
+      description: 이벤트 소분류
+      type: string
+
+EventError:
+  description: 이벤트 에러
+  type: object
+  properties:
+    code:
+      description: 이벤트 에러 (메시지 코드)
+      type: string
+    solution:
+      description: 솔루션 이름
+      type: string
+    service:
+      description: 서비스 이름
+      type: string
+    contents:
+      description: 에러 내용
+      type: string
+
+EventCodeMessage:
+  description: 이벤트 코드 메시지
+  type: object
+  properties:
+    event_code:
+      $ref: 'schemas.yaml#/EventCode'
+    language:
+      description: 언어
+      type: string
+      enum: ["kor", "eng"]
+    brief:
+      description: 요약
+      type: string
+    detail:
+      description: 설명
+      type: string
+
+EventNotification:
+  description: 이벤트 수신여부
+  type: object
+  properties:
+    code:
+      description: 이벤트 코드 (메시지 코드)
+      type: string
+    enable:
+      description: 활성화 여부
+      type: boolean
+
+Backup:
+  description: 백업
+  type: object
+  properties:
+    id:
+      description: 백업 ID
+      type: integer
+    backup_dt:
+      description: 백업 생성일시
+      type: integer
+      format: int64
+    path:
+      description: 백업파일 경로
+      type: string
+    remarks:
+      description: 비고
+      type: string
+
+Config:
+  Global:
+    description: 전역 설정
+    type: object
+    properties:
+      global_timezone:
+        description: 타임존 기본값 ([참조링크](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
+        type: string
+      global_language_set:
+        description: 언어셋 기본값 ([참조링크](https://en.wikipedia.org/wiki/ISO_639-3))
+        type: string
+        enum: ["eng", "kor"]
+      global_log_level:
+        description: 로그 레벨 기본값
+        type: string
+        enum: ["trace", "debug", "info", "warning", "error"]
+        default: "info"
+      global_log_store_period:
+        description: "로그 보유기간 기본값 (month, 0: unlimited)"
+        type: integer
+        format: uint8
+        default: 0
+        minimum: 3
+        maximum: 120
+
+  Service:
+    description: 서비스 관리 설정
+    type: object
+    properties:
+      log_level:
+        description: 서비스 로그 레벨
+        type: string
+        enum: ["trace", "debug", "info", "warning", "error"]
+      log_store_period:
+        description: "서비스 로그 보유기간 (month, 0: unlimited)"
+        type: integer
+        format: uint8
+        minimum: 3
+        maximum: 120
+
+  Identity:
+    description: 사용자 인증 설정
+    type: object
+    properties:
+      user_login_restriction_enable:
+        description: 로그인 제한 여부
+        type: boolean
+        default: true
+      user_login_restriction_try_count:
+        description: 로그인 시도 허용 횟수
+        type: integer
+        minimum: 5
+        maximum: 30
+        default: 5
+      user_login_restriction_time:
+        description: 로그인 제한 시간
+        type: integer
+        minimum: 10
+        maximum: 7200
+        default: 30
+      user_reuse_old_password:
+        description: 이전 비밀번호 설정 가능여부
+        type: boolean
+        default: false
+      user_password_change_cycle:
+        description: "사용지 계정의 비밀번호 변경 주기 (day, 0: None)"
+        type: integer
+        format: uint8
+        default: 90
+        minimum: 0
+        maximum: 180
+      user_session_timeout:
+        description: "사용자 조작없이 세션을 유지하는 시간 (minute, 1: 1440)"
+        type: integer
+        format: uint16
+        default: 30
+        minimum: 1
+        maximum: 1440
+      global_timezone:
+        description: "기본 타임존"
+        type: string
+        default: UTC
+      global_language_set:
+        description: "기본 언어셋"
+        type: string
+        default: eng
+
+  Event:
+    description: 이벤트 설정
+    type: object
+    properties:
+      event_notification_enable:
+        description: 이벤트 알림 여부
+        type: boolean
+        default: false
+      event_email_notification_enable:
+        description: SMTP 서버를 통한 이벤트 이메일 알림 여부
+        type: boolean
+        default: false
+      event_desktop_notification_enable:
+        description: HTML5 기능을 이용한 이벤트 Desktop Notification 여부
+        type: boolean
+        default: false
+      event_popup_notification_enable:
+        description: 이벤트 브라우저 팝업 알림 여부
+        type: boolean
+        default: false
+      event_sms_notification_enable:
+        description: SMS Provider 를 통한 이벤트 SMS 알림 여부
+        type: boolean
+        default: false
+      event_custom_notification_enable:
+        description: 이벤트 Custom 알림 여부
+        type: boolean
+        default: false
+      event_store_period:
+        description: "이벤트 히스토리의 보유기간 (month, 0: unlimited)"
+        type: integer
+        default: 12
+        minimum: 0
+        maximum: 120
+      event_smtp_notifier:
+        description: 이메일 알림을 위한 SMTP 서버
+        type: object
+        properties:
+          server_address:
+            description: IP 주소 혹은 호스트네임
+            type: string
+          server_port:
+            description: 포트번호
+            type: integer
+            minimum: 0
+            maximum: 65535
+          encryption:
+            description: 암호화
+            type: string
+            enum: ["none", "ssl/tls", "starttls"]
+          auth_mechanism:
+            description: 인증방식
+            type: string
+            enum: ["PLAIN", "LOGIN", "GSSAPI", "DIGEST-MD5", "MD5", "CRAM-MD5", "OAUTH10A", "OAUTHBEARER"]
+          auth_username:
+            description: 인증계정
+            type: string
+          auth_password:
+            description: 인증비밀번호
+            type: string
+          sender:
+            description: 송신자
+            type: string
+        default: {}
+      event_sms_notifier:
+        description: SMS 알림을 위한 SMS Provider
+        type: object
+        properties:
+          provider:
+            description: SMS Provider
+            type: string
+          version:
+            description: version
+            type: string
+
+  Backup:
+    description: 솔루션 백업 설정
+    type: object
+    properties:
+      backup_schedule_enable:
+        description: 솔루션 백업 스케쥴 활성화 여부
+        type: boolean
+        default: false
+      backup_schedule:
+        description: 솔루션 백업 스케쥴
+        type: object
+        properties:
+          type:
+            description: 주기 종류
+            type: string
+            enum: ["daily", "weekly", "day-of-monthly", "week-of-monthly"]
+          tz:
+            description: 타임존 ([참조링크](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
+            type: string
+          start-year:
+            description: 시작년도
+            type: integer
+            minimum: 1900
+            maximum: 9999
+          start-month:
+            description: 시작월
+            type: integer
+            minimum: 1
+            maximum: 12
+          start-day:
+            description: 시작일
+            type: integer
+            minimum: 1
+            maximum: 31
+          interval-day:
+            description: 주기간격 (일)
+            type: integer
+            minimum: 1
+            maximum: 15
+          interval-week:
+            description: 주기간격 (주)
+            type: integer
+            minimum: 1
+            maximum: 4
+          interval-month:
+            description: 주기간격 (개월)
+            type: integer
+            enum: [1, 2, 3, 4, 6, 12]
+          week-of-month:
+            description: 주차
+            type: string
+            enum: ["first-week", "second-week", "third-week", "fourth-week", "fifth-week", "last-week"]
+          day-of-month:
+            description: 일자(1-31, last-day)
+            type: string
+          day-of-week:
+            description: 요일
+            type: string
+            enum: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+          hour:
+            description: 시
+            type: integer
+            minimum: 0
+            maximum: 23
+          minute:
+            description: 분
+            type: integer
+            minimum: 0
+            maximum: 59
+        default: {}
+      backup_store_period:
+        description: "솔루션 백업본의 보유기간 (month, 0: unlimited)"
+        type: integer
+        format: uint8
+        default: 12
+        minimum: 0
+        maximum: 120
+
+Pagination:
+  description: UI 페이지 정보
+  type: object
+  properties:
+    page:
+      description: 현재 페이지
+      type: integer
+      format: int64
+    total_page:
+      description: 전체 페이지의 수
+      type: integer
+      format: int64
+    total_items:
+      description: 검색된 아이템 전체 아이템 수
+      type: integer
+      format: int64

@@ -1,0 +1,348 @@
+Resource:
+  get:
+    summary: 이벤트 목록 조회
+    description: 설명추가
+    operationId: cdm.cloud.get.events
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07011
+    tags:
+      - notification
+    parameters:
+      - $ref: 'parameters.yaml#/Pagination/Limit'
+      - $ref: 'parameters.yaml#/Pagination/Offset'
+      - $ref: '#/components/parameters/Solution'
+      - $ref: '#/components/parameters/EventClass_1'
+      - $ref: '#/components/parameters/EventClass_2'
+      - $ref: '#/components/parameters/EventClass_3'
+      - $ref: '#/components/parameters/EventLevel'
+      - $ref: '#/components/parameters/EventIssueDateRangeStartDate'
+      - $ref: '#/components/parameters/EventIssueDateRangeEndDate'
+    responses:
+      200:
+        $ref: '#/components/responses/Events'
+      204:
+        description: No Contents
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+WebSocket:
+  get:
+    summary: 신규 이벤트 실시간 조회 (WebSocket 프로토콜 지원)
+    description: 테넌트의 신규 이벤트를 실시간으로 조회한다.
+    operationId: cdm.cloud.monitor.events
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07025
+    tags:
+      - notification
+    parameters:
+      - $ref: '#/components/parameters/Interval'
+      - $ref: '#/components/parameters/Solution'
+      - $ref: '#/components/parameters/EventClass_1'
+      - $ref: '#/components/parameters/EventClass_2'
+      - $ref: '#/components/parameters/EventClass_3'
+      - $ref: '#/components/parameters/EventLevel'
+    responses:
+      200:
+        $ref: '#/components/responses/StreamEvents'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+Classification:
+  get:
+    summary: 이벤트 코드 분류 목록 조회
+    description: 이벤트 코드 분류 목록을 조회한다.
+    operationId: cdm.cloud.get.event.classes
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07281
+    tags:
+      - notification
+    responses:
+      200:
+        $ref: '#/components/responses/EventClassifications'
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+Object:
+  get:
+    summary: 이벤트 상세 조회
+    description: 설명추가
+    operationId: cdm.cloud.get.event
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07021
+    tags:
+      - notification
+    parameters:
+      - $ref: '#/components/parameters/EventID'
+    responses:
+      200:
+        $ref: '#/components/responses/Event'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+components:
+  parameters:
+    EventID:
+      in: path
+      name: event_id
+      description: 이벤트 ID
+      required: true
+      schema:
+        type: integer
+        format: uint64
+
+    Solution:
+      in: query
+      name: solution
+      description: 솔루션 이름
+      schema:
+        type: string
+
+    EventClass_1:
+      in: query
+      name: class_1
+      description: 이벤트 대분류
+      schema:
+        type: string
+
+    EventClass_2:
+      in: query
+      name: class_2
+      description: 이벤트 중분류
+      schema:
+        type: string
+
+    EventClass_3:
+      in: query
+      name: class_3
+      description: 이벤트 소분류
+      schema:
+        type: string
+
+    EventLevel:
+      in: query
+      name: level
+      description: 이벤트 레벨
+      schema:
+        type: string
+        enum: [ "trace", "info", "warn", "error", "fatal" ]
+
+    EventIssueDateRangeStartDate:
+      in: query
+      name: start_date
+      description: 이벤트 발생일 범위 시작일시 (YYYYMMDDHHmm)
+      schema:
+        type: integer
+        format: int64
+
+    EventIssueDateRangeEndDate:
+      in: query
+      name: end_date
+      description: 이벤트 발생일 범위 종료일시 (YYYYMMDDHHmm)
+      schema:
+        type: integer
+        format: int64
+
+    Interval:
+      in: query
+      name: interval
+      description: WebSocket 데이터 수신 간격 (sec)
+      schema:
+        type: integer
+        format: int32
+        default: 5
+        minimum: 2
+        maximum: 30
+
+  responses:
+    EventClassifications:
+      description: 이벤트 코드 분류 목록
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              event_classifications:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/EventClassification'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            "event_classifications": [
+              {
+                "solution": "cdm-cloud",
+                "class_1": "identity",
+                "class_2": "",
+                "class_3": "login"
+              },
+              {
+                "solution": "cdm-cloud",
+                "class_1": "identity",
+                "class_2": "",
+                "class_3": "logout"
+              }
+            ],
+            "message": {
+              "code": "string",
+              "contents": "string"
+            }
+          }
+
+    StreamEvents:
+      description: 이벤트 목록을 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              events:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/Event'
+          example: {
+            events: [
+              {
+                id: 1,
+                tenant: { id: 1, name: "default" },
+                code: "error.schedule.creation.failure-get",
+                error_code: "invalid_params",
+                contents: "{params: [\"type\", \"start-year\"]}",
+                created_at: 1588899147
+              },
+              {
+                id: 2,
+                tenant: { id: 1, name: "default" },
+                code: "error.schedule.creation.failure-get",
+                error_code: "invalid_params",
+                contents: "{params: [\"type\", \"start-year\"]}",
+                created_at: 1588899147
+              },
+              {
+                id: 3,
+                tenant: { id: 1, name: "default" },
+                code: "error.schedule.creation.failure-get",
+                error_code: "invalid_params",
+                contents: "{params: [\"type\", \"start-year\"]}",
+                created_at: 1588899147
+              }
+            ]
+          }
+
+    Events:
+      description: 이벤트 목록을 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              events:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/Event'
+              pagination:
+                $ref: 'schemas.yaml#/Pagination'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            events: [
+              {
+                id: 1,
+                tenant: { id: 1, name: "default" },
+                code: "error.schedule.creation.failure-get",
+                error_code: "invalid_params",
+                contents: "{params: [\"type\", \"start-year\"]}",
+                created_at: 1588899147
+              },
+              {
+                id: 2,
+                tenant: { id: 1, name: "default" },
+                code: "error.schedule.creation.failure-get",
+                error_code: "invalid_params",
+                contents: "{params: [\"type\", \"start-year\"]}",
+                created_at: 1588899147
+              },
+              {
+                id: 3,
+                tenant: { id: 1, name: "default" },
+                code: "error.schedule.creation.failure-get",
+                error_code: "invalid_params",
+                contents: "{params: [\"type\", \"start-year\"]}",
+                created_at: 1588899147
+              }
+            ],
+            pagination: {
+              page: 1,
+              total_page: 10,
+              total_items: 100
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    Event:
+      description: 이벤트 정보를 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              event:
+                $ref: 'schemas.yaml#/Event'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            event: {
+              id: 1,
+              tenant: { id: 1, name: "default" },
+              code: "error.schedule.creation.failure-get",
+              error_code: "invalid_params",
+              contents: "{params: [\"type\", \"start-year\"]}",
+              created_at: 1588899147
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }

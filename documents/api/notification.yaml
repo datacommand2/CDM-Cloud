@@ -1,0 +1,352 @@
+Receiver:
+  Tenant:
+    get:
+      summary: 이벤트 수신 여부 조회 (테넌트)
+      description: 특정 테넌트의 모든 이벤트 수신 여부를 조회한다.
+      operationId: cdm.cloud.get.tenant.event.receives
+      externalDocs:
+        url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07051
+      tags:
+        - notification
+      parameters:
+        - $ref: 'notification_events.yaml#/components/parameters/Solution'
+        - $ref: 'notification_events.yaml#/components/parameters/EventClass_1'
+        - $ref: 'notification_events.yaml#/components/parameters/EventClass_2'
+        - $ref: 'notification_events.yaml#/components/parameters/EventClass_3'
+        - $ref: 'notification_events.yaml#/components/parameters/EventLevel'
+      responses:
+        200:
+          $ref: '#/components/responses/EventNotification'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthenticated
+        403:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+        501:
+          description: Not Implemented
+        503:
+          description: Service Unavailable
+
+    patch:
+      summary: 이벤트 수신 여부 변경 (테넌트)
+      description: 특정 테넌트의 이벤트 수신 여부를 변경한다.
+      operationId: cdm.cloud.set.tenant.event.receives
+      externalDocs:
+        url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07061
+      tags:
+        - notification
+      requestBody:
+        $ref: '#/components/requestBodies/EventNotification'
+      responses:
+        200:
+          $ref: '#/components/responses/Message'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthenticated
+        403:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+        501:
+          description: Not Implemented
+        503:
+          description: Service Unavailable
+
+  User:
+    get:
+      summary: 이벤트 수신 여부 조회 (사용자)
+      description: 사용자의 모든 이벤트 수신 여부를 조회한다.
+      operationId: cdm.cloud.get.user.event.receives
+      externalDocs:
+        url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07091
+      tags:
+        - notification
+      parameters:
+        - $ref: 'notification_events.yaml#/components/parameters/Solution'
+        - $ref: 'notification_events.yaml#/components/parameters/EventClass_1'
+        - $ref: 'notification_events.yaml#/components/parameters/EventClass_2'
+        - $ref: 'notification_events.yaml#/components/parameters/EventClass_3'
+        - $ref: 'notification_events.yaml#/components/parameters/EventLevel'
+      responses:
+        200:
+          $ref: '#/components/responses/EventNotification'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthenticated
+        403:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+        501:
+          description: Not Implemented
+        503:
+          description: Service Unavailable
+
+    patch:
+      summary: 이벤트 수신 여부 변경 (사용자)
+      description: 사용자의 이벤트 수신 여부를 변경한다.
+      operationId: cdm.cloud.set.user.event.receives
+      externalDocs:
+        url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07101
+      tags:
+        - notification
+      requestBody:
+        $ref: '#/components/requestBodies/EventNotification'
+      responses:
+        200:
+          $ref: '#/components/responses/Message'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthenticated
+        403:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+        501:
+          description: Not Implemented
+        503:
+          description: Service Unavailable
+
+  UserReset:
+    post:
+      summary: 이벤트 수신 여부 초기화 (사용자)
+      description: 사용자의 이벤트 수신 여부를 초기화한다.
+      operationId: cdm.cloud.reset.user.event.receives
+      externalDocs:
+        url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07105
+      tags:
+        - notification
+      responses:
+        200:
+          $ref: '#/components/responses/Message'
+        401:
+          description: Unauthenticated
+        403:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+        501:
+          description: Not Implemented
+        503:
+          description: Service Unavailable
+
+Config:
+  get:
+    summary: 이벤트 설정 조회
+    description: 테넌트의 이벤트 설정을 조회한다.
+    operationId: cdm.cloud.get.notification.config
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07261
+    tags:
+      - notification
+    responses:
+      200:
+        $ref: '#/components/responses/EventConfig'
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  put:
+    summary: 이벤트 설정 변경
+    description: 테넌트의 이벤트 설정을 변경한다.
+    operationId: cdm.cloud.set.notification.config
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-07271
+    tags:
+      - notification
+    requestBody:
+      $ref: '#/components/requestBodies/EventConfig'
+    responses:
+      200:
+        $ref: '#/components/responses/EventConfig'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+components:
+  parameters:
+    NotificationReceiverSolution:
+      in: path
+      name: solution
+      description: 솔루션
+      required: true
+      schema:
+        type: string
+
+    NotificationReceiverRole:
+      in: path
+      name: role
+      description: 역할
+      required: true
+      schema:
+        type: string
+        enum: ["manager", "operator", "viewer"]
+
+    NotificationReceiverUserID:
+      in: path
+      name: user_id
+      description: 사용자 ID
+      required: true
+      schema:
+        type: string
+
+  requestBodies:
+    EventNotification:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              event_notifications:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/EventNotification'
+          example: {
+            event_notifications: [
+              {code: "error.schedule.creation.invalid_params", enable: true},
+              {code: "error.schedule.creation.cannot_be_executed", enable: false},
+              {code: "error.schedule.creation.unknown"}
+            ],
+          }
+
+    EventConfig:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              event_config:
+                $ref: 'schemas.yaml#/Config/Event'
+          example: {
+            event_config: {
+              event_notification_enable: false,
+              event_email_notification_enable: false,
+              event_desktop_notification_enable: false,
+              event_popup_notification_enable: false,
+              event_sms_notification_enable: false,
+              event_custom_notification_enable: false,
+              event_store_period: 12,
+              event_smtp_notifier: {
+                server_address: "smtp.gmail.com",
+                server_port: 465,
+                encryption: "ssl/tls",
+                auth_mechanism: "PLAIN",
+                auth_username: "admin@datacommand.kr",
+                auth_password: "password",
+                sender: "DataCommand"
+              },
+              event_sms_notifier: {
+                provider: "SMS Provider",
+                version: "version"
+              }
+            }
+          }
+
+
+  responses:
+    EventNotification:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              event_notifications:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/EventNotification'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            event_notifications:[
+              {code: "error.schedule.creation.invalid_params", enable: true},
+              {code: "error.schedule.creation.cannot_be_executed", enable: false}
+            ],
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    Message:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    EventConfig:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              event_config:
+                $ref: 'schemas.yaml#/Config/Event'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            event_config: {
+              event_notification_enable: false,
+              event_email_notification_enable: false,
+              event_desktop_notification_enable: false,
+              event_popup_notification_enable: false,
+              event_sms_notification_enable: false,
+              event_custom_notification_enable: false,
+              event_store_period: 12,
+              event_smtp_notifier: {
+                server_address: "smtp.gmail.com",
+                server_port: 465,
+                encryption: "ssl/tls",
+                auth_mechanism: "PLAIN",
+                auth_username: "admin@datacommand.kr",
+                auth_password: "password",
+                sender: "DataCommand"
+              },
+              event_sms_notifier: {
+                provider: "SMS Provider",
+                version: "version"
+              }
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }

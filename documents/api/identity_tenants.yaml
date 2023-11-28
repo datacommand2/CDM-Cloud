@@ -1,0 +1,317 @@
+Resource:
+  get:
+    summary: 테넌트 목록 조회
+    description: 설명추가
+    operationId: cdm.cloud.get.tenants
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-10011
+    tags:
+      - tenant
+    parameters:
+      - $ref: '#/components/parameters/TenantName'
+    responses:
+      200:
+        $ref: '#/components/responses/Tenants'
+      204:
+        description: No Contents
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  post:
+    summary: 테넌트 추가
+    description: 설명추가
+    operationId: cdm.cloud.create.tenant
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-10031
+    tags:
+      - tenant
+    requestBody:
+      $ref: '#/components/requestBodies/NewTenant'
+    responses:
+      200:
+        $ref: '#/components/responses/Tenant'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      412:
+        description: Precondition Failed
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+Object:
+  get:
+    summary: 테넌트 상세 조회
+    description: 설명추가
+    operationId: cdm.cloud.get.tenant
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-10021
+    tags:
+      - tenant
+    parameters:
+      - $ref: '#/components/parameters/TenantID'
+    responses:
+      200:
+        $ref: '#/components/responses/Tenant'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  patch:
+    summary: 테넌트 수정
+    description: 설명추가
+    operationId: cdm.cloud.update.tenant
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-10041
+    tags:
+      - tenant
+    parameters:
+      - $ref: '#/components/parameters/TenantID'
+    requestBody:
+      $ref: '#/components/requestBodies/Tenant'
+    responses:
+      200:
+        $ref: '#/components/responses/Tenant'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      412:
+        description: Precondition Failed
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  Activate:
+    post:
+      summary: 테넌트 활성화
+      description: 설명추가
+      operationId: cdm.cloud.activate.tenant
+      externalDocs:
+        url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-10051
+      tags:
+        - tenant
+      parameters:
+        - $ref: '#/components/parameters/TenantID'
+      responses:
+        200:
+          $ref: '#/components/responses/Tenant'
+        401:
+          description: Unauthenticated
+        403:
+          description: Unauthorized
+        404:
+          description: Not Found
+        412:
+          description: Precondition Failed
+        500:
+          description: Internal Server Error
+        501:
+          description: Not Implemented
+        503:
+          description: Service Unavailable
+
+  Deactivate:
+    post:
+      summary: 테넌트 비활성화
+      description: 설명추가
+      operationId: cdm.cloud.deactivate.tenant
+      externalDocs:
+        url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-10051
+      tags:
+        - tenant
+      parameters:
+        - $ref: '#/components/parameters/TenantID'
+      responses:
+        200:
+          $ref: '#/components/responses/DeactivateTenant'
+        401:
+          description: Unauthenticated
+        403:
+          description: Unauthorized
+        404:
+          description: Not Found
+        412:
+          description: Precondition Failed
+        500:
+          description: Internal Server Error
+        501:
+          description: Not Implemented
+        503:
+          description: Service Unavailable
+
+components:
+  parameters:
+    TenantID:
+      in: path
+      name: tenant_id
+      description: 테넌트 ID
+      required: true
+      schema:
+        type: integer
+        format: uint64
+
+    TenantName:
+      in: query
+      name: name
+      description: 테넌트 이름
+      schema:
+        type: string
+
+  requestBodies:
+    NewTenant:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              tenant:
+                $ref: 'schemas.yaml#/Tenant'
+          example: {
+            tenant: {
+              name: "default",
+              use_flag: true,
+              solutions: [
+                { solution: "cdm-disaster-recovery" },
+                { solution: "cdm-replicator" }
+              ],
+              remarks: "기본 테넌트다 !!!"
+            }
+          }
+
+    Tenant:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              tenant:
+                $ref: 'schemas.yaml#/Tenant'
+          example: {
+            tenant: {
+              id: 1,
+              name: "default",
+              solutions: [
+                { solution: "cdm-disaster-recovery" },
+                { solution: "cdm-replicator" }
+              ],
+              remarks: "기본 테넌트다 !!!"
+            }
+          }
+
+  responses:
+    Tenants:
+      description: 테넌트 목록을 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              tenants:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/Tenant'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            tenants: [
+              {id: 1, name: "default", use_flag: true},
+              {id: 2, name: "DataCommand", use_flag: true},
+            ],
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    Tenant:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              tenant:
+                $ref: 'schemas.yaml#/Tenant'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            tenant: {
+              id: 1,
+              name: "default",
+              use_flag: true,
+              solutions: [
+                {solution: "cdm-disaster-recovery"},
+                {solution: "cdm-replicator"}
+              ],
+              remarks: "기본 테넌트다 !!!",
+              created_at: 1606787327,
+              updated_at: 1606787327
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    DeactivateTenant:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              tenant:
+                $ref: 'schemas.yaml#/Tenant'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            tenant: {
+              id: 1,
+              name: "default",
+              use_flag: false,
+              solutions: [
+                {solution: "cdm-disaster-recovery"},
+                {solution: "cdm-replicator"}
+              ],
+              remarks: "기본 테넌트다 !!!",
+              created_at: 1606787327,
+              updated_at: 1606787327
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }

@@ -1,0 +1,335 @@
+Resource:
+  get:
+    summary: 사용자 그룹 목록 조회
+    description: 사용자 그룹 이름과 일치 하는 그룹 정보 혹은 전체 사용자 그룹들에 정보를 조회한다.
+    operationId: cdm.cloud.get.user_groups
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06071
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserGroupName'
+    responses:
+      200:
+        $ref: '#/components/responses/UserGroups'
+      204:
+        description: No Contents
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  post:
+    summary: 사용자 그룹 추가
+    description: 사용자 그룹을 추가한다.
+    operationId: cdm.cloud.create.user_group
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06081
+    tags:
+      - identity
+    requestBody:
+      $ref: '#/components/requestBodies/NewUserGroup'
+    responses:
+      200:
+        $ref: '#/components/responses/UserGroup'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      409:
+        description: Conflict
+      412:
+        description: Precondition Failed
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+Object:
+  get:
+    summary: 사용자 그룹 상세 조회
+    description: 사용자 그룹 상세 정보를 조회한다.
+    operationId: cdm.cloud.get.user_group
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06072
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserGroupID'
+    responses:
+      200:
+        $ref: '#/components/responses/UserGroup'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  patch:
+    summary: 사용자 그룹 수정
+    description: 사용자 그룹 정보를 수정한다.
+    operationId: cdm.cloud.update.user_group
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06091
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserGroupID'
+    requestBody:
+      $ref: '#/components/requestBodies/UserGroup'
+    responses:
+      200:
+        $ref: '#/components/responses/UserGroup'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      409:
+        description: Conflict
+      412:
+        description: Precondition Failed
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  delete:
+    summary: 사용자 그룹 삭제
+    description: 사용자 그룹 정보를 삭제한다.
+    operationId: cdm.cloud.delete.user_group
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06101
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserGroupID'
+    responses:
+      200:
+        $ref: '#/components/responses/Message'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      412:
+        description: Precondition Failed
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  Users:
+    put:
+      summary: 사용자 그룹 사용자 목록 수정
+      description: 사용자 그룹에 사용자 목록을 수정하며, 수정 시 해당 그룹의 기존 사용자 목록은 수정할 사용자 목록들로 덮어 쓰여진다.
+      operationId: cdm.cloud.put.user_group.user
+      externalDocs:
+        url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06082
+      tags:
+        - identity
+      parameters:
+        - $ref: '#/components/parameters/UserGroupID'
+      requestBody:
+        $ref: '#/components/requestBodies/GroupUsers'
+      responses:
+        200:
+          $ref: '#/components/responses/GroupUsers'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthenticated
+        403:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+        501:
+          description: Not Implemented
+        503:
+          description: Service Unavailable
+
+components:
+  parameters:
+    UserGroupID:
+      in: path
+      name: group_id
+      description: 사용자 그룹 ID
+      required: true
+      schema:
+        type: integer
+        format: uint64
+
+    UserGroupName:
+      in: query
+      name: name
+      description: 사용자 그룹 이름
+      schema:
+        type: string
+
+  requestBodies:
+    NewUserGroup:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              group:
+                $ref: 'schemas.yaml#/UserGroup'
+          example: {
+            group: {
+              tenant: {id: 1},
+              name: "개발부서", remarks: "개발하는 부서다 !!!"
+            }
+          }
+
+    GroupUsers:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/User'
+          example: {
+            users: [
+              {id: 1},{id: 2},{id: 3}
+            ] 
+          }
+
+    UserGroup:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              group:
+                $ref: 'schemas.yaml#/UserGroup'
+          example: {
+            group: {
+              id: 1, tenant: {id: 1},
+              name: "개발부서", remarks: "개발하는 부서다 !!!"
+            }
+          }
+
+  responses:
+    UserGroups:
+      description: 사용자 그룹 목록을 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              groups:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/UserGroup'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            groups: [
+              {id: 1, tenant: {id: 1, name: "default"}, name: "개발부서"},
+              {id: 2, tenant: {id: 1, name: "default"}, name: "개발1팀"},
+              {id: 3, tenant: {id: 1, name: "default"}, name: "개발2팀"}
+            ],
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    UserGroup:
+      description: 사용자 그룹을 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              group:
+                $ref: 'schemas.yaml#/UserGroup'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            group: {
+              id: 1, tenant: {id: 1, name: "default"},
+              name: "개발부서", remarks: "개발하는 부서다 !!!",
+              created_at: 1601864597, updated_at: 1601864597
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    GroupUsers:
+      description: 사용자 그룹에 추가 한 사용자 목록을 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/User'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            users: [
+              {id: 1, tenant: {id: 1, name: "default"}, account: "admin", name: "관리자" },
+              {id: 2, tenant: {id: 1, name: "default"}, account: "wcseo", name: "서원철", department: "개발 1팀", position: "팀장" },
+              {id: 3, tenant: {id: 1, name: "default"}, account: "khlee", name: "이기현" }
+            ],
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    Message:
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }

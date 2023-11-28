@@ -1,0 +1,461 @@
+Resource:
+  get:
+    summary: 사용자 계정 목록 조회
+    description: 설명추가
+    operationId: cdm.cloud.get.users
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06011
+    tags:
+      - identity
+    parameters:
+      - $ref: 'parameters.yaml#/Pagination/Limit'
+      - $ref: 'parameters.yaml#/Pagination/Offset'
+      - $ref: '#/components/parameters/Solution'
+      - $ref: '#/components/parameters/Role'
+      - $ref: '#/components/parameters/UserGroup'
+      - $ref: '#/components/parameters/ExcludeUserGroup'
+      - $ref: '#/components/parameters/UserName'
+      - $ref: '#/components/parameters/UserDepartment'
+      - $ref: '#/components/parameters/UserPosition'
+      - $ref: '#/components/parameters/LoginOnly'
+    responses:
+      200:
+        $ref: '#/components/responses/Users'
+      204:
+        description: No Contents
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  post:
+    summary: 사용자 계정 추가
+    description: 사용자 계정을 추가한다. 요청 성공 시, 응답은 JSON 객체로 전달되며 수정된 사용자 정보 및 임의로 생성된 암호를 포함한다.
+    operationId: cdm.cloud.create.user
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06031
+    tags:
+      - identity
+    requestBody:
+      $ref: '#/components/requestBodies/User'
+    responses:
+      200:
+        $ref: '#/components/responses/NewUser'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      409:
+        description: Conflict
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+Object:
+  get:
+    summary: 사용자 계정 상세 조회
+    description: 사용자 계정 조회를 요청한다. 요청 성공 시, 응답은 JSON 객체로 전달되며 사용자 정보를 포함한다.
+    operationId: cdm.cloud.get.user
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06021
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserID'
+    responses:
+      200:
+        $ref: '#/components/responses/User'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  patch:
+    summary: 사용자 계정 수정
+    description: 사용자 계정을 수정한다. 요청 성공 시, 응답은 JSON 객체로 전달되며 수정된 사용자 정보를 포함한다.
+    operationId: cdm.cloud.update.user
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06041
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserID'
+    requestBody:
+      $ref: '#/components/requestBodies/User'
+    responses:
+      200:
+        $ref: '#/components/responses/User'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      409:
+        description: Conflict
+      412:
+        description: Precondition Failed
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  delete:
+    summary: 사용자 계정 삭제
+    description: 사용자 계정을 삭제한다. 요청 성공 시, 성공 코드를 반환한다.
+    operationId: cdm.cloud.delete.user
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06061
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserID'
+    responses:
+      200:
+        $ref: '#/components/responses/Message'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+Password:
+  post:
+    summary: 사용자 계정 비밀번호 변경
+    description: 설명추가
+    operationId: cdm.cloud.update.user.password
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06051
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserID'
+    requestBody:
+      $ref: '#/components/requestBodies/UserPassword'
+    responses:
+      200:
+        $ref: '#/components/responses/Message'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      412:
+        description: Precondition Failed
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+PasswordReset:
+  post:
+    summary: 사용자 계정 비밀번호 초기화
+    description: 설명추가
+    operationId: cdm.cloud.reset.user.password
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-06052
+    tags:
+      - identity
+    parameters:
+      - $ref: '#/components/parameters/UserID'
+    responses:
+      200:
+        $ref: '#/components/responses/UserPassword'
+      400:
+        description: Bad Request
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      404:
+        description: Not Found
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+components:
+  parameters:
+    UserID:
+      in: path
+      name: user_id
+      description: 사용자 ID
+      required: true
+      schema:
+        type: integer
+        format: uint64
+
+    Solution:
+      in: query
+      name: solution
+      description: 솔루션
+      schema:
+        type: string
+
+    Role:
+      in: query
+      name: role
+      description: 역할
+      schema:
+        type: string
+        enum: ["manager", "operator", "viewer"]
+
+    UserGroup:
+      in: query
+      name: group_id
+      description: 사용자 그룹 ID
+      schema:
+        type: integer
+        format: uint64
+
+    ExcludeUserGroup:
+      in: query
+      name: exclude_group_id
+      description: 제외할 사용자 그룹 ID
+      schema:
+        type: integer
+        format: uint64
+
+    UserName:
+      in: query
+      name: name
+      description: 사용자 이름
+      schema:
+        type: string
+
+    UserDepartment:
+      in: query
+      name: department
+      description: 사용자 부서
+      schema:
+        type: string
+
+    UserPosition:
+      in: query
+      name: position
+      description: 사용자 직책
+      schema:
+        type: string
+
+    LoginOnly:
+      in: query
+      name: login_only
+      description: 로그인 된 사용자만 조회
+      schema:
+        type: boolean
+
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            description: 사용자
+            type: object
+            properties:
+              user:
+                $ref: 'schemas.yaml#/User'
+          examples:
+            add-user:
+              value:
+                user: {
+                  account: "wcseo", tenant: {id: 1}, roles: [{id: 2}], groups: [{id: 2}],
+                  timezone: "Asia/Seoul", language_set: "eng",
+                  name: "서원철", department: "개발 1팀", position: "팀장",
+                  email: "wcseo@datacommand.kr", contact: "010-0000-0000"
+                }
+            update-user:
+              value:
+                user: {
+                  id: 2, tenant: {id: 1}, roles: [{id: 2}], groups: [{id: 2}],
+                  timezone: "Asia/Seoul", language_set: "eng",
+                  name: "서원철", department: "개발 1팀", position: "팀장",
+                  email: "wcseo@datacommand.kr", contact: "010-0000-0000"
+                }
+
+    UserPassword:
+      content:
+        application/json:
+          schema:
+            description: 사용자
+            type: object
+            required:
+              - current_password
+              - new_password
+            properties:
+              current_password:
+                description: 현재 비밀번호 (SHA-256)
+                type: string
+              new_password:
+                description: 변경할 비밀번호 (SHA-256)
+                type: string
+          example: {
+            current_password: "password",
+            new_password: "password1"
+          }
+
+  responses:
+    Users:
+      description: 사용자 목록을 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: 'schemas.yaml#/User'
+              pagination:
+                $ref: 'schemas.yaml#/Pagination'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            users: [
+              {id: 1, tenant: {id: 1, name: "default"}, account: "admin", name: "관리자", session: {key: "eebas.."}},
+              {id: 2, tenant: {id: 1, name: "default"}, account: "wcseo", name: "서원철", department: "개발 1팀", position: "팀장", session: {key: "eebas.."}},
+              {id: 3, tenant: {id: 1, name: "default"}, account: "khlee", name: "이기현", session: {key: "eebas.."}}
+            ],
+            pagination: {
+              page: 1,
+              total_page: 10,
+              total_items: 100
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    User:
+      description: 사용자 정보를 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                $ref: 'schemas.yaml#/User'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            user: {
+              id: 2, account: "wcseo",
+              tenant: {id: 1, name: "default"},
+              roles: [{id: 2, solution: "CDM-DisasterRecovery", role: "manager"}],
+              groups: [{id: 2, name: "개발1팀"}],
+              timezone: "Asia/Seoul", language_set: "eng",
+              name: "서원철", department: "개발 1팀", position: "팀장",
+              email: "wcseo@datacommand.kr", contact: "010-0000-0000",
+              password_updated_at: 1601864597, last_logged_in_at: 1601864597,
+              created_at: 1601864597, updated_at: 1601864597
+            },
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    NewUser:
+      description: 새로 추가된 사용자 정보를 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                $ref: 'schemas.yaml#/User'
+              password:
+                type: string
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            user: {
+              id: 2, tenant: {id: 1, name: "default"}, account: "wcseo", roles: [{id: 2, solution: "CDM-DisasterRecovery", role: "manager"}], groups: [{id: 2, name: "개발1팀"}],
+              timezone: "Asia/Seoul", language_set: "eng",
+              name: "서원철", department: "개발 1팀", position: "팀장",
+              email: "wcseo@datacommand.kr", contact: "010-0000-0000",
+              created_at: 1601864597,
+            },
+            password: "!tGAb$EB*+7k7Q96",
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    UserPassword:
+      description: 사용자 비밀번호를 반환한다.
+      content:
+        application/text:
+          schema:
+            description: 사용자 비밀번호
+            type: object
+            properties:
+              password:
+                type: string
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            password: "!tGAb$EB*+7k7Q96",
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    Message:
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }

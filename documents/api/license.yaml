@@ -1,0 +1,185 @@
+ProductUUID:
+  get:
+    summary: Product UUID 조회
+    description: CDM-Cloud 의 Product UUID 를 조회한다.
+    operationId: cdm.get.product.uuid
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-01011
+    tags:
+      - license
+    responses:
+      200:
+        $ref: '#/components/responses/ProductUUID'
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+License:
+  get:
+    summary: 라이선스 조회
+    description: 등록된 라이선스 상세 정보를 조회 한다.
+    operationId: cdm.get.license
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-01021
+    tags:
+      - license
+    responses:
+      200:
+        $ref: '#/components/responses/License'
+      204:
+        description: No Contents
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+  post:
+    summary: 라이선스 입력
+    description: 라이선스를 입력한다. 이미 라이선스가 등록되어 있다면 갱신한다.
+    operationId: cdm.set.license
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-01041
+    tags:
+      - license
+    requestBody:
+      $ref: '#/components/requestBodies/License'
+    responses:
+      200:
+        $ref: '#/components/responses/License'
+      400:
+        description: BadRequest
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+Check:
+  post:
+    summary: 라이선스 유효성 확인
+    description: 라이선스 유효성을 검사하고, 유효한 라이선스라면 상세 정보를 반환한다.
+    operationId: cdm.check.license
+    externalDocs:
+      url: http://10.1.1.220/cdm/cdm-cloud/documents/-/blob/master/functions.md#fc-cl-01031
+    tags:
+      - license
+    requestBody:
+      $ref: '#/components/requestBodies/License'
+    responses:
+      200:
+        $ref: '#/components/responses/License'
+      400:
+        description: BadRequest
+      401:
+        description: Unauthenticated
+      403:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+      501:
+        description: Not Implemented
+      503:
+        description: Service Unavailable
+
+components:
+  requestBodies:
+    License:
+      content:
+        application/json:
+          schema:
+            description: 라이선스 키
+            type: object
+            properties:
+              license:
+                type: string
+          example: {
+            license: "EEevolf9sF337pYc..."
+          }
+
+  responses:
+    ProductUUID:
+      description: CDM-Cloud 최초 설치시 생성된 제품의 UUID 를 반환한다.
+      content:
+        application/json:
+          schema:
+            description: CDM-Cloud 최초 설치시 생성된 제품의 UUID
+            type: object
+            properties:
+              uuid:
+                type: string
+              message:
+                $ref: 'schemas.yaml#/Message'
+          example: {
+            uuid: "9d1ee2b8-43a2-4a44-a51e-241b8e10b29f",
+            message: {
+              code: "message code",
+              contents: "message contents"
+            }
+          }
+
+    License:
+      description: 라이선스 정보를 반환한다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              payloads:
+                $ref: 'schemas.yaml#/License'
+              message:
+                $ref: 'schemas.yaml#/Message'
+          examples:
+            cdm-cloud-only:
+              value: {
+                payloads: {
+                  cdm_cloud_license_key: "EEevolf9sF337pYc...",
+                  cdm_cloud_provider: "데이터커맨드",
+                  cdm_cloud_customer: "현대자동차"
+                },
+                message: {
+                  code: "message code",
+                  contents: "message contents"
+                }
+              }
+            with-cdm-disaster-recovery:
+              value: {
+                payloads: {
+                  cdm_cloud_license_key: "EEevolf9sF337pYc...",
+                  cdm_cloud_provider: "데이터커맨드",
+                  cdm_cloud_customer: "현대자동차",
+                  cdm_dr_issue_dt: 1593491418,
+                  cdm_dr_expiry_dt: 1593491418,
+                  cdm_dr_limits_platform: ["openstack"],
+                  cdm_dr_limits_storage: ["lvm", "nfs", "ceph", "netapp"],
+                  cdm_dr_limits_cluster: 2,
+                  cdm_dr_limits_tenant: 3,
+                  cdm_dr_limits_instance: 100,
+                  cdm_dr_limits_volume: 500,
+                  cdm_r_issue_dt: 1593491418,
+                  cdm_r_expiry_dt: 1593491418,
+                  cdm_r_limits_agent: 500,
+                  cdm_r_limits_group: 300
+                },
+                message: {
+                  code: "message code",
+                  contents: "message contents"
+                }
+              }
