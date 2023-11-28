@@ -1,15 +1,16 @@
 package main
 
 import (
-	"10.1.1.220/cdm/cdm-cloud/common/errors"
-	"10.1.1.220/cdm/cdm-cloud/common/logger"
-	"fmt"
+	"github.com/datacommand2/cdm-cloud/common/errors"
+	"github.com/datacommand2/cdm-cloud/common/logger"
 	"github.com/google/uuid"
 	"github.com/micro/go-micro/v2"
 	"github.com/micro/go-micro/v2/auth"
 	"github.com/micro/go-micro/v2/config/cmd"
 	"github.com/micro/go-micro/v2/registry"
 	"github.com/micro/go-micro/v2/server"
+
+	"fmt"
 	"os"
 	"strings"
 
