@@ -11,6 +11,7 @@ import (
 	"github.com/datacommand2/cdm-cloud/services/identity/handler"
 	identity "github.com/datacommand2/cdm-cloud/services/identity/proto"
 	"github.com/jinzhu/gorm"
+	"github.com/micro/go-micro/v2"
 	"github.com/micro/go-micro/v2/client"
 	"github.com/micro/go-micro/v2/client/selector"
 	"github.com/micro/go-micro/v2/registry"
