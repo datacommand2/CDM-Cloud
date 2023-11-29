@@ -5,7 +5,7 @@ go 1.14
 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
 require (
-	github.com/datacommand2/cdm-cloud/common v0.0.0-20231127061122-07e02be5bd0c
+	github.com/datacommand2/cdm-cloud/common v0.0.0-20231128060710-080c7906e48b
 	github.com/golang/protobuf v1.5.2
 	github.com/gorhill/cronexpr v0.0.0-20180427100037-88b0669f7d75
 	github.com/jinzhu/gorm v1.9.16
