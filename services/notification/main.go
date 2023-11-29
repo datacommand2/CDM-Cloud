@@ -13,6 +13,7 @@ import (
 	"github.com/datacommand2/cdm-cloud/services/notification/notifier"
 	notification "github.com/datacommand2/cdm-cloud/services/notification/proto"
 	"github.com/jinzhu/gorm"
+	"github.com/micro/go-micro/v2"
 	"github.com/micro/go-micro/v2/client"
 	"github.com/micro/go-micro/v2/client/selector"
 	"github.com/micro/go-micro/v2/registry"
