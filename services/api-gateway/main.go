@@ -7,7 +7,7 @@ import (
 	"github.com/datacommand2/cdm-cloud/common/logger"
 	"github.com/datacommand2/cdm-cloud/services/api-gateway/handler"
 	"github.com/datacommand2/cdm-cloud/services/api-gateway/handler/wrapper"
-  "github.com/micro/cli/v2"
+	"github.com/micro/cli/v2"
 	"github.com/micro/go-micro/v2/client"
 	"github.com/micro/go-micro/v2/client/selector"
 	"github.com/micro/go-micro/v2/config/cmd"
