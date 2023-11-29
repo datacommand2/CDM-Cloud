@@ -1,8 +1,7 @@
 package handler
 
 import (
-	"context"
-	"crypto/rsa"
+	"github.com/casbin/casbin/v2"
 	casbinmodel "github.com/casbin/casbin/v2/model"
 	gormAdapter "github.com/casbin/gorm-adapter/v2"
 	"github.com/datacommand2/cdm-cloud/common/constant"
@@ -13,6 +12,9 @@ import (
 	"github.com/datacommand2/cdm-cloud/common/metadata"
 	identity "github.com/datacommand2/cdm-cloud/services/identity/proto"
 	"github.com/jinzhu/gorm"
+
+	"context"
+	"crypto/rsa"
 )
 
 // IdentityHandler 는 Identity 기능을 이용하기위한 handler 이다
