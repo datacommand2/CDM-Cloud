@@ -6,10 +6,10 @@ build: proto
 	        GOFLAGS='-mod=vendor' CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -a -ldflags "-extldflags '-static' -X 'main.version=$(VERSION)'" || exit 1;
 
 proto:
-					@for FILE in proto/*.proto; do \
-						protoc -I$$GOPATH --proto_path=${PWD} --micro_out=. --go_out=. $$FILE || exit 1; \
-					  echo compiled: $$FILE; \
-					 done
+		@for FILE in proto/*.proto; do \
+			protoc -I$$GOPATH --proto_path=${PWD} --micro_out=. --go_out=. $$FILE || exit 1; \
+		  echo compiled: $$FILE; \
+		done
 
 vendor:
 	        GOFLAGS='-mod=vendor' go mod tidy
