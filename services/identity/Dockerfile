@@ -11,6 +11,6 @@ FROM alpine
 
 RUN apk --no-cache add tzdata
 
-COPY --from=builder /build/notification /
+COPY --from=builder /build/identity /
 
-ENTRYPOINT ["/notification"]
+ENTRYPOINT ["/identity"]
